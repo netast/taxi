@@ -1,6 +1,5 @@
 ﻿using System;
-using Prism.Autofac;
-using Prism.Autofac.Forms;
+using Prism.Unity;
 using taxi.ViewModels;
 using taxi.Views;
 using Xamarin.Forms;

@@ -8,8 +8,9 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using Prism;
-using Prism.Autofac.Forms;
-using Autofac;
+using Prism.Unity;
+using System.ComponentModel;
+using Microsoft.Practices.Unity;
 
 namespace taxi.Droid
 {
@@ -33,9 +34,11 @@ namespace taxi.Droid
 
 	public class AndroidInitializer : IPlatformInitializer
 	{
-		public void RegisterTypes(IContainer container)
+		public void RegisterTypes(IUnityContainer container)
 		{
-
+			
 		}
+
+
 	}
 }
