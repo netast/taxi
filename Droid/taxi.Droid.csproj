@@ -81,6 +81,18 @@
     <Reference Include="Xamarin.Forms.Xaml">
       <HintPath>..\packages\Xamarin.Forms.2.3.3.180\lib\MonoAndroid10\Xamarin.Forms.Xaml.dll</HintPath>
     </Reference>
+    <Reference Include="Prism">
+      <HintPath>..\packages\Prism.Core.6.2.0\lib\MonoAndroid10\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Forms">
+      <HintPath>..\packages\Prism.Forms.6.2.0\lib\MonoAndroid1.0\Prism.Forms.dll</HintPath>
+    </Reference>
+    <Reference Include="Autofac">
+      <HintPath>..\packages\Autofac.3.5.2\lib\portable-net4+sl5+netcore45+wpa81+wp8+MonoAndroid1+MonoTouch1\Autofac.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Autofac.Forms">
+      <HintPath>..\packages\Prism.Autofac.Forms.6.2.0\lib\MonoAndroid1.0\Prism.Autofac.Forms.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\taxi\taxi.csproj">
