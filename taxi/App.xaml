@@ -4,6 +4,12 @@
 		xmlns:prism="clr-namespace:Prism.Unity;Prism.Unity.Form"  
 		x:Class="taxi.App">
 	<Application.Resources>
-		<!-- Application resource dictionary -->
+
+		<ResourceDictionary>				
+			<!-- Colors -->
+			<OnPlatform x:TypeArguments="Color" x:Key="HeaderBGColor"   iOS="#C87328"  Android="#C87328"  WinPhone="#C87328"  />
+			<OnPlatform x:TypeArguments="Color" x:Key="HeaderFGColor"   iOS="#f4f5f7"  Android="#f4f5f7"  WinPhone="#f4f5f7"  />
+
+		</ResourceDictionary>
 	</Application.Resources>
 </prism:PrismApplication>

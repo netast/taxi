@@ -1,12 +1,43 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage 
 		xmlns="http://xamarin.com/schemas/2014/forms"
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" 
 		prism:ViewModelLocator.AutowireViewModel="True" 
 		x:Class="taxi.Views.LoginPage">
-	<StackLayout Orientation="Vertical" HorizontalOptions="CenterAndExpand" VerticalOptions="Center">
-		<Label TextColor="Blue" Text="Prism Login Page" />
-		<Button Text="Show Message" Command="{Binding ShowMessageCommand}" />
-	</StackLayout>
+	<Grid >
+		<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="50" />
+			<RowDefinition Height="Auto" />	
+			<RowDefinition Height="Auto" />	
+			<RowDefinition Height="Auto" />	
+			<RowDefinition Height="Auto" />	
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+
+		</Grid.ColumnDefinitions>
+		<Grid Grid.Row="0" BackgroundColor="{StaticResource HeaderBGColor}" Padding="5">
+			<Grid.RowDefinitions>
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />					
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto" />
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+			<Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" Source="TaxiLogo.png" WidthRequest="300" Aspect="AspectFit"/>
+		    <Label Grid.Row="1" Grid.Column="0" TextColor="{StaticResource HeaderFGColor}" HorizontalOptions="Start" Text="Добрый день, 9039818881" VerticalTextAlignment="Center" VerticalOptions="Center" />
+	     	<Button Grid.Row="1" Grid.Column="1" HorizontalOptions ="End" Text="Выход"/>
+		</Grid >
+
+		<!--<Label Grid.Row="2" Text="Вход" HorizontalOptions="Center" FontSize="24" HorizontalTextAlignment="Center"/>-->
+		<Entry Grid.Row="3" HorizontalOptions="Center" WidthRequest="200" Placeholder="Телефон" />
+		<Entry Grid.Row="4" HorizontalOptions="Center" WidthRequest="200" Placeholder="Пароль" />
+		<StackLayout Grid.Row="5" Orientation="Horizontal" HorizontalOptions="Center">
+			<Button Text="Выслать Пароль" />
+			<Button Text="Войти" />
+		</StackLayout>
+
+	</Grid>
 </ContentPage>
