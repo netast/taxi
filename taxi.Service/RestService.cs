@@ -12,7 +12,7 @@ namespace taxi.Service
 	{
 		private CookieContainer authCookieContainer = new CookieContainer();
 
-		public async Task<LoginResult> LoginAsync(string url)
+		public async Task<TaxiRequestResult> LoginAsync(string url)
 		{
 			var tempCookieContainer = new CookieContainer();
 			var httpClientHandler = new HttpClientHandler { UseCookies = true, CookieContainer = tempCookieContainer };
@@ -23,7 +23,7 @@ namespace taxi.Service
 				var response = await httpClient.GetAsync(url);
 
 				var content = await response.Content.ReadAsStringAsync();
-				var loginResult = JsonConvert.DeserializeObject<LoginResult>(content);
+				var loginResult = JsonConvert.DeserializeObject<TaxiRequestResult>(content);
 				if (loginResult.result)
 				{
 

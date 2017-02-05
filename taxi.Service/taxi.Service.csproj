@@ -32,6 +32,8 @@
     <Compile Include="IRestService.cs" />
     <Compile Include="RestService.cs" />
     <Compile Include="RestException.cs" />
+    <Compile Include="ITaxiService.cs" />
+    <Compile Include="TaxiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
