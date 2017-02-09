@@ -3,6 +3,8 @@ using Prism.Unity;
 using taxi.ViewModels;
 using taxi.Views;
 using Xamarin.Forms;
+using taxi.Service;
+using Microsoft.Practices.Unity;
 
 namespace taxi
 {
@@ -18,10 +20,14 @@ namespace taxi
 
 		protected override void RegisterTypes()
 		{
-
-
+			#region Pages
 			Container.RegisterTypeForNavigation<LoginPage, LoginPageViewModel>();
+			#endregion
 
+			#region Services
+			Container.RegisterType<IRestService,RestService>(new ContainerControlledLifetimeManager());
+			Container.RegisterType<ITaxiService, TaxiService>(new ContainerControlledLifetimeManager());
+			#endregion
 		}
 	}
 }

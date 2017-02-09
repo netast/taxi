@@ -102,6 +102,14 @@
       <Project>{CBBE53A5-B228-4175-B45C-CE7CBE5A26CC}</Project>
       <Name>taxi</Name>
     </ProjectReference>
+    <ProjectReference Include="..\taxi.Model\taxi.Model.csproj">
+      <Project>{767B2768-93D6-4AAF-BBFF-77CDD03A631F}</Project>
+      <Name>taxi.Model</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\taxi.Service\taxi.Service.csproj">
+      <Project>{6F2B0EF5-C65C-4726-8BA1-5469039A7153}</Project>
+      <Name>taxi.Service</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

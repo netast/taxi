@@ -80,6 +80,40 @@ namespace taxi.Service
 			}
 		}
 
+		public async Task<T> PostAsync<T>(string url)
+		{
+			var httpClientHandler = new HttpClientHandler();
+			var cookkieContainer = authCookieContainer;
+			if(authCookieContainer != null)
+			{
+				httpClientHandler.CookieContainer = cookkieContainer;
+			}
+
+			using (var httpClient = new HttpClient(httpClientHandler))
+			{
+				try
+				{
+					var response = await httpClient.PostAsync(url,null);
+					if (!response.IsSuccessStatusCode)
+					{
+						throw new RestException(response.ReasonPhrase, response.StatusCode);
+					}
+					var resultContent = await response.Content.ReadAsStringAsync();
+					var result = JsonConvert.DeserializeObject<T>(resultContent);
+					return result;
+				}
+
+				catch (Exception ex)
+				{
+					var restException = ex as RestException;
+					var statusCode = restException != null ? restException.HttpStatusCode : HttpStatusCode.NoContent;
+
+					throw new RestException(ex.Message, statusCode);
+				}
+
+			}
+		}
+
 		public async Task<T> GetAsync<T>(string url)
 		{
 			var httpClientHandler = new HttpClientHandler();

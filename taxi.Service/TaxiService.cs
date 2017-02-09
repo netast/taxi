@@ -8,7 +8,7 @@ namespace taxi.Service
 	public class TaxiService : ITaxiService
 	{
 		IRestService _restService;
-		const string baseUrl= "http://client.taxi-omsk.com/";
+		const string baseUrl= "http://client.taxi-omsk.com:81/";
 
 		public TaxiService(IRestService restService)
 		{
@@ -17,8 +17,8 @@ namespace taxi.Service
 
 		public async Task<TaxiRequestResult> ActivateClientBySMSAsync(string phoneNumber)
 		{
-			var url = baseUrl+"Login/ActivateClientBySMSAsync?"+phoneNumber;
-			var result = await _restService.GetAsync<TaxiRequestResult>(url);
+			var url = baseUrl+"Login/ActivateClientBySMS";
+			var result = await _restService.PostAsync<TaxiRequestResult>(url,new List<KeyValuePair<string, string>>{new KeyValuePair<string, string>(phoneNumber,phoneNumber)});
 			return result;
 		}
 
