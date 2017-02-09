@@ -28,15 +28,47 @@ namespace taxi.ViewModels
 		}
 
 
+		public string PhoneNumber {get;set;}
+		public string Password {get;set;}
+
+
 		private DelegateCommand sendPasswordCommand;
 		public DelegateCommand SendPasswordCommand
 		{
 			get{
 			return sendPasswordCommand = sendPasswordCommand ?? new DelegateCommand(async ()=>{
-				
-					var result = await _taxiService.ActivateClientBySMSAsync("9039818881");
+					if(string.IsNullOrEmpty(PhoneNumber)){
+						await _dialogService.DisplayAlertAsync("Phone Number must be entered","Missing Login","OK");
+						return;
+					}
+						
+
+					var result = await _taxiService.ActivateClientBySMSAsync(PhoneNumber);
 				});
 			}
+		}
+
+		private DelegateCommand loginCommand;
+		public DelegateCommand LoginCommand
+		{
+			get
+			{
+				return loginCommand = loginCommand ?? new DelegateCommand(async ()=>{
+					if(string.IsNullOrEmpty(PhoneNumber)){
+						await _dialogService.DisplayAlertAsync("Phone Number must be entered","Missing Login","OK");
+						return;
+					}
+
+					if(string.IsNullOrEmpty(Password)){
+						await _dialogService.DisplayAlertAsync("Password must be entered","Missing Password","OK");
+						return;
+					}
+
+					var result = await _taxiService.LoginMobileAsync(PhoneNumber,Password);
+
+				});
+			}
+			
 		}
 	}
 }

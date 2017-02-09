@@ -32,8 +32,8 @@
 		</Grid >
 
 		<!--<Label Grid.Row="2" Text="Вход" HorizontalOptions="Center" FontSize="24" HorizontalTextAlignment="Center"/>-->
-		<Entry Grid.Row="3" HorizontalOptions="Center" WidthRequest="200" Placeholder="Телефон" />
-		<Entry Grid.Row="4" HorizontalOptions="Center" WidthRequest="200" Placeholder="Пароль" />
+		<Entry Grid.Row="3" HorizontalOptions="Center" WidthRequest="200" Placeholder="Телефон" Text="{Binding PhoneNumber}" />
+		<Entry Grid.Row="4" HorizontalOptions="Center" WidthRequest="200" Placeholder="Пароль" Text="{Binding Password}" />
 		<StackLayout Grid.Row="5" Orientation="Horizontal" HorizontalOptions="Center">
 			<Button Text="Выслать Пароль" Command="{Binding SendPasswordCommand}" />
 			<Button Text="Войти" Command="{Binding LoginCommand}" />
