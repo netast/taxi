@@ -11,12 +11,7 @@ namespace taxi
 		private ListView listview;
 		private Button button;
 
-		private List<string> listSource = new List<string> { 
-		  "Ivan",
-          "Semen",
-          "Stepan" 
-		};
-
+		private List<string> listSource = new List<string> ();
 
 		public AutoComplete()
 		{
@@ -144,7 +139,7 @@ namespace taxi
 			listview.IsVisible = true;
 			listview.SeparatorVisibility = SeparatorVisibility.None;
 			listview.HasUnevenRows = true;
-			listview.RowHeight = 20;
+			listview.RowHeight = 25;
 			listview.ItemTapped+= onListItemTapped;
 
 
@@ -183,7 +178,7 @@ namespace taxi
 		{
 			Text = entry.Text;
 
-			if(entry.Text.Length > 2 && TextChangedCommand != null && TextChangedCommand.CanExecute(null)){
+			if(entry.Text.Length > 1 && TextChangedCommand != null && TextChangedCommand.CanExecute(null)){
 				TextChangedCommand.Execute(null);
 			}else{
 				if(ItemsSource != null && ItemsSource.Count > 0)
