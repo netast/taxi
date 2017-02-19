@@ -11,11 +11,18 @@ namespace taxi.ViewModels
 	{
 		IPageDialogService _dialogService;
 		ITaxiService _taxiService;
+		INavigationService _navigationService;
 
-		public LoginPageViewModel( IPageDialogService dialogService, ITaxiService taxiService)
+		public LoginPageViewModel( IPageDialogService dialogService, ITaxiService taxiService,INavigationService navigationService)
 		{
 			_dialogService = dialogService;
 			_taxiService = taxiService;
+			_navigationService = navigationService;
+			#if DEBUG
+			PhoneNumber="9039818881";
+			Password="5514";
+				
+			#endif 
 		}
 
 		public DelegateCommand ShowMessageCommand
@@ -44,6 +51,13 @@ namespace taxi.ViewModels
 						
 
 					var result = await _taxiService.ActivateClientBySMSAsync(PhoneNumber);
+					if(result.result){
+						await _dialogService.DisplayAlertAsync("Failed to ask for password, check internet connection " + result.message,"SMS password","OK");
+					}
+					else
+					{
+						await _dialogService.DisplayAlertAsync("Passsword was sent","SMS password","OK");
+					}
 				});
 			}
 		}
@@ -65,6 +79,12 @@ namespace taxi.ViewModels
 					}
 
 					var result = await _taxiService.LoginMobileAsync(PhoneNumber,Password);
+
+					if(!result){
+						await _dialogService.DisplayAlertAsync("Passsword or phone number is incorrect","Login","OK");
+					}
+
+					await _navigationService.NavigateAsync("DestinationPage");
 
 				});
 			}

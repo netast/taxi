@@ -37,10 +37,10 @@ namespace taxi.Service
 			throw new NotImplementedException();
 		}
 
-		public Task<string[]> GetStreetsOrPlacesAsync(string term)
+		public async Task<string[]> GetStreetsOrPlacesAsync(string term)
 		{
-			var url = baseUrl + "Order/GetStreetsOrPlaces?"+term;
-			var result = _restService.GetAsync<string[]>(url);
+			var url = baseUrl + "Orders/GetStreetsOrPlaces?term="+term;
+			var result = await _restService.GetAsync<string[]>(url);
 			return result;
 		}
 

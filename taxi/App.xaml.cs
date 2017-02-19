@@ -22,6 +22,7 @@ namespace taxi
 		{
 			#region Pages
 			Container.RegisterTypeForNavigation<LoginPage, LoginPageViewModel>();
+			Container.RegisterTypeForNavigation<DestinationPage,DestinationPageViewModel>();
 			#endregion
 
 			#region Services
