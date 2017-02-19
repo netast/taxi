@@ -36,6 +36,9 @@
     <EmbeddedResource Include="Views\DestinationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\FromLocationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -54,6 +57,12 @@
       <DependentUpon>DestinationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\DestinationPageViewModel.cs" />
+    <Compile Include="Service\GeoLocation.cs" />
+    <Compile Include="Service\ILocationTracker.cs" />
+    <Compile Include="Views\FromLocationPage.xaml.cs">
+      <DependentUpon>FromLocationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\FromLocationPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.Forms.Core">
@@ -88,6 +97,7 @@
     <Folder Include="Views\" />
     <Folder Include="ViewModels\" />
     <Folder Include="Controls\" />
+    <Folder Include="Service\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\taxi.Service\taxi.Service.csproj">

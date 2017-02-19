@@ -5,7 +5,9 @@ using taxi.Views;
 using Xamarin.Forms;
 using taxi.Service;
 using Microsoft.Practices.Unity;
+using Xamarin.Forms.Xaml;
 
+[assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace taxi
 {
 	public partial class App : PrismApplication
@@ -15,7 +17,9 @@ namespace taxi
 		protected override void OnInitialized()
 		{
 			InitializeComponent();
-			NavigationService.NavigateAsync("LoginPage");
+			//NavigationService.NavigateAsync("LoginPage");
+
+			NavigationService.NavigateAsync("FromLocationPage");
 		}
 
 		protected override void RegisterTypes()
@@ -23,6 +27,7 @@ namespace taxi
 			#region Pages
 			Container.RegisterTypeForNavigation<LoginPage, LoginPageViewModel>();
 			Container.RegisterTypeForNavigation<DestinationPage,DestinationPageViewModel>();
+			Container.RegisterTypeForNavigation<FromLocationPage,FromLocationPageViewModel>();
 			#endregion
 
 			#region Services
