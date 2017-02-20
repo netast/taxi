@@ -57,7 +57,7 @@ namespace taxi
 				return textChangedCommand = textChangedCommand ?? new DelegateCommand(async () => {
 					try{
 						var result = await _taxiService.GetStreetsOrPlacesAsync(Text);
-						if(result != null && result.Length > 0)
+						//if(result != null && result.Length > 0)
 							ItemsSource = result.ToList();
 					}catch(Exception ex){
 						#if DEBUG

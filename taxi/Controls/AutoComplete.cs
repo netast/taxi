@@ -115,7 +115,7 @@ namespace taxi
 		void init()
 		{
 			button = new Button{
-				Text = "OK"
+				Text = "Далее"
 			};
 			button.Clicked += onDoneButtonClicked;
 				
@@ -127,17 +127,16 @@ namespace taxi
 			};
 
 			entry.TextChanged += onEntryTextChanged;
-
-
+			entry.Placeholder = "Введите адрес назначения";
+			//entry.PlaceholderColor = Color.Gray;
 		
 
-			listview = new ListView
+			listview = new ListView()
 			{
 				ItemsSource = listSource
 			};
 
 			listview.IsVisible = true;
-			//listview.CachingStrategy = Recycle?
 			listview.SeparatorVisibility = SeparatorVisibility.None;
 			listview.HasUnevenRows = true;
 			listview.RowHeight = 25;
