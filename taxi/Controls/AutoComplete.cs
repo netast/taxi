@@ -137,6 +137,7 @@ namespace taxi
 			};
 
 			listview.IsVisible = true;
+			//listview.CachingStrategy = Recycle?
 			listview.SeparatorVisibility = SeparatorVisibility.None;
 			listview.HasUnevenRows = true;
 			listview.RowHeight = 25;
