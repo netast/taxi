@@ -17,9 +17,9 @@ namespace taxi
 		protected override void OnInitialized()
 		{
 			InitializeComponent();
-			NavigationService.NavigateAsync("LoginPage");
+			//NavigationService.NavigateAsync("LoginPage");
 
-			//NavigationService.NavigateAsync("FromLocationPage");
+			NavigationService.NavigateAsync("FromLocationPage");
 		}
 
 		protected override void RegisterTypes()
