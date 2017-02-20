@@ -1,0 +1,2 @@
+ios = AIzaSyBkvPy49y9E6nSaE5dbvXjzWOWThYzszxM
+android = AIzaSyCWkQQxioJAhoO7FZQ3LI82qqwgBx12ouY
