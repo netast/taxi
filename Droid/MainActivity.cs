@@ -28,7 +28,7 @@ namespace taxi.Droid
 			global::Xamarin.Forms.Forms.Init(this, bundle);
 
 			LoadApplication(new App(new AndroidInitializer()));
-
+			Xamarin.FormsMaps.Init(this,bundle);
 		}
 
 
