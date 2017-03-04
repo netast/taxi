@@ -173,6 +173,7 @@
     <AndroidResource Include="Resources\drawable-xhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\drawable\TaxiLogo.png" />
+    <AndroidResource Include="Resources\drawable\man.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Services\" />

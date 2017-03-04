@@ -9,7 +9,10 @@ namespace taxi
 {
 	public class FromLocationPageViewModel : BindableBase
 	{
+
+		GeographicLocation currentGeographicLocation;
 		ILocationTracker _locationTracker;
+		private Geocoder geocoder = new Geocoder();
 
 		public FromLocationPageViewModel(ILocationTracker locationTracker)
 		{
@@ -26,6 +29,7 @@ namespace taxi
 
 		void onLocationChanged(object sender, GeographicLocation e)
 		{
+			currentGeographicLocation = e;
 			MyLocation = e.ToString();
 		}
 
@@ -64,16 +68,97 @@ namespace taxi
 		}
 
 
+		private CameraPosition cameraPosition;
+		public CameraPosition CameraPosition
+		{
+			get 
+			{
+				return cameraPosition;
+			}
+			set
+			{
+				if (cameraPosition != value)
+				{
+					cameraPosition = value;
+					OnPropertyChanged(nameof(CameraPosition));
+				}
+			}
+		}
+
+		private string fromPlace;
+		public string FromPlace
+		{
+			get 
+			{
+				return fromPlace;
+			}
+			set 
+			{
+				if (fromPlace != value)
+				{
+					fromPlace = value;
+
+					OnPropertyChanged(nameof(FromPlace));
+				}
+			}
+		}
+
+
+		private string searchResult;
+		public string SearchResult 
+		{
+			get 
+			{
+				return searchResult;
+			}
+			set 
+			{
+				if (searchResult != value) 
+				{
+					searchResult = value;
+					OnPropertyChanged(nameof(SearchResult));
+				}
+			}
+		}
+			
+		public Command NextCommand 
+		{
+			get 
+			{
+				return new Command(() => 
+				{
+					
+				});
+			}
+		}
+
 		public Command CameraPositionCommand
 		{
 			get
 			{
-				return new Command((parameter) => {
+				return new Command(async (parameter) => {
 					var position = parameter as CameraPosition;
 					if (position != null)
 					{
 						CenterLocation = (new GeographicLocation(position.Target.Latitude,position.Target.Longitude)).ToString();
+						SearchResult = "Ищем Вас ..";
+						var streets = await geocoder.GetAddressesForPositionAsync(new Position(position.Target.Latitude, position.Target.Longitude));
+						var enumerator = streets.GetEnumerator();
+						enumerator.MoveNext();
+						SearchResult = "Я здесь";
+						FromPlace = enumerator.Current;
 					}
+				});
+			}
+		}
+
+		public Command GoToMyLocationCommand
+		{
+			get 
+			{
+				return new Command(() => 
+				{
+					CameraPosition = new CameraPosition(new Position(currentGeographicLocation.Latitude,currentGeographicLocation.Longitude), 20);
 				});
 			}
 		}

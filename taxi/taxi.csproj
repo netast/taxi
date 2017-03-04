@@ -39,6 +39,11 @@
     <EmbeddedResource Include="Views\FromLocationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controls\LocationButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\ic_my_location_black_24dp.png" />
+    <EmbeddedResource Include="Images\ic_my_location_black_48dp.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -65,6 +70,10 @@
     <Compile Include="ViewModels\FromLocationPageViewModel.cs" />
     <Compile Include="Controls\EMap.cs" />
     <Compile Include="Controls\ImageButton.cs" />
+    <Compile Include="Controls\LocationButton.xaml.cs">
+      <DependentUpon>LocationButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Extensions\ImageResourceExtension.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Prism">
@@ -103,6 +112,8 @@
     <Folder Include="ViewModels\" />
     <Folder Include="Controls\" />
     <Folder Include="Service\" />
+    <Folder Include="Images\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\taxi.Service\taxi.Service.csproj">

@@ -22,9 +22,15 @@
 			<Grid VerticalOptions="FillAndExpand">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*" />
+					<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
 				<local:EMap Grid.Row="0"  VerticalOptions="FillAndExpand" CameraPositionChangedCommand="{Binding CameraPositionCommand}" />
-			    <Image Grid.Row="0" Source="TaxiLogo.png" WidthRequest="50" VerticalOptions="Center" HorizontalOptions="Center" InputTransparent="true" />
+				<local:LocationButton Grid.Row="0" ClickedCommand="{Binding GoToMyLocationCommand}" HorizontalOptions="End" VerticalOptions="Start" Margin="20" />
+				
+			    <Image Grid.Row="0" Source="man.png" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Center" InputTransparent="true" />				
+				<Label Grid.Row="1" Text="{Binding FromPlace}" HorizontalTextAlignment="Center" FontSize="12" />
+				<Button Grid.Row="2" Text="{Binding SearchResult}" Command="{Binding NextCommand}" />				
 			</Grid>
 
 
