@@ -64,6 +64,7 @@
     </Compile>
     <Compile Include="ViewModels\FromLocationPageViewModel.cs" />
     <Compile Include="Controls\EMap.cs" />
+    <Compile Include="Controls\ImageButton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Prism">

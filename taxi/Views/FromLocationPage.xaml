@@ -13,11 +13,21 @@
 	<ContentPage.Content>
 		
 		<StackLayout VerticalOptions="FillAndExpand" Orientation="Vertical">
-			<Label Text="{Binding MyLocation}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="8"/>
-      <local:EMap  VerticalOptions="FillAndExpand"
-            x:Name="MyMap"
+			<StackLayout Orientation="Horizontal" >
+				<Label Text="Center: " FontSize="8"/>
+				<Label Text="{Binding CenterLocation}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="8"/>
+				<Label Text=" Position: " FontSize="8" />
+				<Label Text="{Binding MyLocation}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="8"/>
+			</StackLayout>
+			<Grid VerticalOptions="FillAndExpand">
+				<Grid.RowDefinitions>
+					<RowDefinition Height="*" />
+				</Grid.RowDefinitions>
+				<local:EMap Grid.Row="0"  VerticalOptions="FillAndExpand" CameraPositionChangedCommand="{Binding CameraPositionCommand}" />
+			    <Image Grid.Row="0" Source="TaxiLogo.png" WidthRequest="50" VerticalOptions="Center" HorizontalOptions="Center" InputTransparent="true" />
+			</Grid>
 
-        />
-    </StackLayout>
+
+        </StackLayout>
 	</ContentPage.Content>
 </ContentPage>

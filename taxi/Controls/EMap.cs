@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.GoogleMaps;
 
@@ -6,57 +7,36 @@ namespace taxi
 {
 	public class EMap : Map
 	{
+
 		public EMap()
 		{
-			
+			CameraChanged += onCameraChanged;
 		}
 
-		BindableProperty CenterPositionProperty = BindableProperty.Create(nameof(CenterPosition),typeof(EMap),typeof(Position), defaultBindingMode: BindingMode.TwoWay, propertyChanged: centerPositionChanged);
-		BindableProperty AreaProperty = BindableProperty.Create(nameof(Area),typeof(EMap), typeof(double),defaultBindingMode: BindingMode.TwoWay,propertyChanged:areaChanged);
+		public static readonly BindableProperty CameraPositionChangedCommandProperty = BindableProperty.Create(nameof(CameraPositionChangedCommand), typeof(ICommand), typeof(EMap));
 
-		public Position CenterPosition
+		public ICommand CameraPositionChangedCommand
 		{
-			get{
-				return (Position) GetValue(CenterPositionProperty);
+			get
+			{
+				return (ICommand)GetValue(CameraPositionChangedCommandProperty);
 			}
-			set{
-				SetValue(CenterPositionProperty,value);
-			}
-		}
-
-
-		public double Area{
-			get{
-				return (double) GetValue(AreaProperty);
-			}
-			set{
-				SetValue(AreaProperty,value);
+			set
+			{
+				SetValue(CameraPositionChangedCommandProperty, value);
 			}
 		}
 
-		static void centerPositionChanged(BindableObject bindable, object oldValue, object newValue)
+		void onCameraChanged(object sender, CameraChangedEventArgs e)
 		{
-			if(bindable is EMap){
-				var map = (EMap) bindable;
-
-
-				updateMapPosition(map);
-			}
-		}
-
-		static void areaChanged(BindableObject bindable, object oldValue, object newValue)
-		{
-			if(bindable is EMap){
-				var map = (EMap) bindable;
-
-				updateMapPosition(map);
-			}
+			if (CameraPositionChangedCommand != null && CameraPositionChangedCommand.CanExecute(null)) 
+			{
+				CameraPositionChangedCommand.Execute(e.Position);
+			} 
 		}
 
 
 
-		static void updateMapPosition(EMap map){
-			map.MoveToRegion(MapSpan.FromCenterAndRadius( map.CenterPosition, Distance.FromKilometers(map.Area)));
-		}
-}
+	}
+
 }
