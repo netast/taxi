@@ -26,9 +26,9 @@ namespace taxi.Droid
 			Toolkit.Init(this);
 
 			global::Xamarin.Forms.Forms.Init(this, bundle);
-
+			Xamarin.FormsGoogleMaps.Init(this, bundle);
 			LoadApplication(new App(new AndroidInitializer()));
-			Xamarin.FormsMaps.Init(this,bundle);
+
 		}
 
 

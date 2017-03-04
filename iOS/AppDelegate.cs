@@ -15,9 +15,9 @@ namespace taxi.iOS
 		public override bool FinishedLaunching(UIApplication app, NSDictionary options)
 		{
 			global::Xamarin.Forms.Forms.Init();
-
+			Xamarin.FormsGoogleMaps.Init("AIzaSyCsJCDHY_yizQY4ZKYSFZUbPUGSVRFl8q4");
 			LoadApplication(new App(new AppleInitializer()));
-			Xamarin.FormsMaps.Init();
+
 			return base.FinishedLaunching(app, options);
 		}
 	}

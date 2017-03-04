@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 
 using Xamarin.Forms;
-using Xamarin.Forms.Maps;
 
 namespace taxi
 {
@@ -12,9 +11,7 @@ namespace taxi
 		{
 			InitializeComponent();
 
-			MyMap.MoveToRegion(
-				MapSpan.FromCenterAndRadius(
-					new Position(37,-122), Distance.FromMiles(1)));
+
 		}
 	}
 }

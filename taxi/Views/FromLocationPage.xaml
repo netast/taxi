@@ -3,17 +3,20 @@
 		xmlns="http://xamarin.com/schemas/2014/forms" 
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
 		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" 
-		 xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+		xmlns:maps="clr-namespace:Xamarin.Forms.GoogleMaps;assembly=Xamarin.Forms.GoogleMaps"
 		prism:ViewModelLocator.AutowireViewModel="True" 
 		xmlns:local="clr-namespace:taxi;assembly=taxi"
-		x:Class="taxi.FromLocationPage">
+		x:Class="taxi.FromLocationPage"
+		Style="{StaticResource NavPage}"
+	>
+
 	<ContentPage.Content>
 		
 		<StackLayout VerticalOptions="FillAndExpand" Orientation="Vertical">
-			<Label Text="{Binding MyLocation}" HorizontalOptions="Center" VerticalOptions="Center"/>
-      <maps:Map HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+			<Label Text="{Binding MyLocation}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="8"/>
+      <local:EMap  VerticalOptions="FillAndExpand"
             x:Name="MyMap"
-            IsShowingUser="true"
+
         />
     </StackLayout>
 	</ContentPage.Content>
