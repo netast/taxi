@@ -12,28 +12,36 @@
 
 	<ContentPage.Content>
 		
-		<StackLayout VerticalOptions="FillAndExpand" Orientation="Vertical">
+		<!--<StackLayout VerticalOptions="FillAndExpand" Orientation="Vertical">
 			<StackLayout Orientation="Horizontal" >
 				<Label Text="Center: " FontSize="8"/>
 				<Label Text="{Binding CenterLocation}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="8"/>
 				<Label Text=" Position: " FontSize="8" />
 				<Label Text="{Binding MyLocation}" HorizontalOptions="Center" VerticalOptions="Center" FontSize="8"/>
-			</StackLayout>
+			</StackLayout>-->
 			<Grid VerticalOptions="FillAndExpand">
 				<Grid.RowDefinitions>
 					<RowDefinition Height="*" />
 					<RowDefinition Height="Auto" />
 					<RowDefinition Height="Auto" />
 				</Grid.RowDefinitions>
-				<local:EMap Grid.Row="0"  VerticalOptions="FillAndExpand" CameraPositionChangedCommand="{Binding CameraPositionCommand}" />
-				<local:LocationButton Grid.Row="0" ClickedCommand="{Binding GoToMyLocationCommand}" HorizontalOptions="End" VerticalOptions="Start" Margin="20" />
+				<Grid.ColumnDefinitions>
+					<ColumnDefinition Width="1*" />
+					<ColumnDefinition Width="1*" />
+				</Grid.ColumnDefinitions>
+				<local:EMap Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand"
+				            CameraPositionChangedCommand="{Binding CameraPositionCommand}" 
+				            CenterMapPosition="{Binding CenterMapPosition}"
+				/>
+				<local:LocationButton Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" ClickedCommand="{Binding GoToMyLocationCommand}" HorizontalOptions="End" VerticalOptions="Start" Margin="20" />
 				
-			    <Image Grid.Row="0" Source="man.png" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Center" InputTransparent="true" />				
-				<Label Grid.Row="1" Text="{Binding FromPlace}" HorizontalTextAlignment="Center" FontSize="12" />
-				<Button Grid.Row="2" Text="{Binding SearchResult}" Command="{Binding NextCommand}" />				
+			    <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Source="{local:ImageResource taxi.Images.man.png}" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Center" InputTransparent="true" />				
+				<Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding FromPlace}" HorizontalTextAlignment="Center" FontSize="12" />
+					<Button  Grid.Row="2" Grid.Column="0" Text="{Binding SearchResult}" Command="{Binding NextCommand}" Style="{StaticResource ConfirmButton}" HorizontalOptions="FillAndExpand"/>
+					<Button  Grid.Row="2" Grid.Column="1" Text="Изменить" Command="{Binding NextCommand}" Style="{StaticResource EditButton}"  HorizontalOptions="FillAndExpand" />
 			</Grid>
 
 
-        </StackLayout>
+      <!--  </StackLayout>-->
 	</ContentPage.Content>
 </ContentPage>

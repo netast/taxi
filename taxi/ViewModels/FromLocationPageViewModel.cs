@@ -4,12 +4,13 @@ using Prism.Mvvm;
 using Xamarin.Forms.GoogleMaps;
 using System.Windows.Input;
 using Prism.Commands;
+using System.Diagnostics;
 
 namespace taxi
 {
 	public class FromLocationPageViewModel : BindableBase
 	{
-
+		private bool gpsGot = false;
 		GeographicLocation currentGeographicLocation;
 		ILocationTracker _locationTracker;
 		private Geocoder geocoder = new Geocoder();
@@ -31,6 +32,11 @@ namespace taxi
 		{
 			currentGeographicLocation = e;
 			MyLocation = e.ToString();
+			if (!gpsGot)
+			{
+				CameraPosition = CenterMapPosition = new CameraPosition(new Position(currentGeographicLocation.Latitude, currentGeographicLocation.Longitude), 300);
+				gpsGot = true;
+			}
 		}
 
 		private string myLocation;
@@ -42,7 +48,7 @@ namespace taxi
 			}
 			set
 			{
-				if(myLocation == value)
+				if (myLocation == value)
 					return;
 
 				myLocation = value;
@@ -68,10 +74,28 @@ namespace taxi
 		}
 
 
+		private CameraPosition centerMapPosition;
+		public CameraPosition CenterMapPosition
+		{
+			get
+			{
+				return centerMapPosition;
+			}
+			set
+			{
+				if (value != centerMapPosition)
+				{
+					centerMapPosition = value;
+					OnPropertyChanged(nameof(CenterMapPosition));
+				}
+			}
+		}
+
+
 		private CameraPosition cameraPosition;
 		public CameraPosition CameraPosition
 		{
-			get 
+			get
 			{
 				return cameraPosition;
 			}
@@ -88,11 +112,11 @@ namespace taxi
 		private string fromPlace;
 		public string FromPlace
 		{
-			get 
+			get
 			{
 				return fromPlace;
 			}
-			set 
+			set
 			{
 				if (fromPlace != value)
 				{
@@ -105,48 +129,54 @@ namespace taxi
 
 
 		private string searchResult;
-		public string SearchResult 
+		public string SearchResult
 		{
-			get 
+			get
 			{
 				return searchResult;
 			}
-			set 
+			set
 			{
-				if (searchResult != value) 
+				if (searchResult != value)
 				{
 					searchResult = value;
 					OnPropertyChanged(nameof(SearchResult));
 				}
 			}
 		}
-			
-		public Command NextCommand 
+
+		public Command NextCommand
 		{
-			get 
+			get
 			{
-				return new Command(() => 
+				return new Command(() =>
 				{
-					
+
 				});
 			}
 		}
 
+		private Command cameraPositionCommand;
 		public Command CameraPositionCommand
 		{
 			get
 			{
-				return new Command(async (parameter) => {
-					var position = parameter as CameraPosition;
+				return cameraPositionCommand = cameraPositionCommand ?? new Command(async (parameter) =>
+				{
+				var position = parameter as CameraPosition;
 					if (position != null)
 					{
-						CenterLocation = (new GeographicLocation(position.Target.Latitude,position.Target.Longitude)).ToString();
+						CenterLocation = (new GeographicLocation(position.Target.Latitude, position.Target.Longitude)).ToString();
 						SearchResult = "Ищем Вас ..";
 						var streets = await geocoder.GetAddressesForPositionAsync(new Position(position.Target.Latitude, position.Target.Longitude));
 						var enumerator = streets.GetEnumerator();
 						enumerator.MoveNext();
 						SearchResult = "Я здесь";
-						FromPlace = enumerator.Current;
+						var place = enumerator.Current;
+						FromPlace = place != null ? place.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)[0] : "Не найдено";
+#if DEBUG
+						Debug.WriteLine(place);
+#endif
 					}
 				});
 			}
@@ -158,7 +188,10 @@ namespace taxi
 			{
 				return new Command(() => 
 				{
-					CameraPosition = new CameraPosition(new Position(currentGeographicLocation.Latitude,currentGeographicLocation.Longitude), 20);
+					if (gpsGot)
+					{
+						CameraPosition = CenterMapPosition = new CameraPosition(new Position(currentGeographicLocation.Latitude, currentGeographicLocation.Longitude), 300);
+					}
 				});
 			}
 		}
