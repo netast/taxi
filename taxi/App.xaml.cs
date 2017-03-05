@@ -17,17 +17,21 @@ namespace taxi
 		protected override void OnInitialized()
 		{
 			InitializeComponent();
-			//NavigationService.NavigateAsync("LoginPage");
+			//NavigationService.NavigateAsync("NavigationPage/LoginPage");
 
-			NavigationService.NavigateAsync("FromLocationPage");
+			NavigationService.NavigateAsync("LoginPage");
 		}
 
 		protected override void RegisterTypes()
 		{
+
+			Container.RegisterTypeForNavigation<NavigationPage>();
 			#region Pages
 			Container.RegisterTypeForNavigation<LoginPage, LoginPageViewModel>();
 			Container.RegisterTypeForNavigation<DestinationPage,DestinationPageViewModel>();
 			Container.RegisterTypeForNavigation<FromLocationPage,FromLocationPageViewModel>();
+			Container.RegisterTypeForNavigation<FromLocationAddressPage, FromLocationAddressPageViewModel>();
+			Container.RegisterTypeForNavigation<OrderPage, OrderPageViewModel>();
 			#endregion
 
 			#region Services

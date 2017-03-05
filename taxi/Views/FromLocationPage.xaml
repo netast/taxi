@@ -38,7 +38,7 @@
 			    <Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Source="{local:ImageResource taxi.Images.man.png}" HeightRequest="30" VerticalOptions="Center" HorizontalOptions="Center" InputTransparent="true" />				
 				<Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding FromPlace}" HorizontalTextAlignment="Center" FontSize="12" />
 					<Button  Grid.Row="2" Grid.Column="0" Text="{Binding SearchResult}" Command="{Binding NextCommand}" Style="{StaticResource ConfirmButton}" HorizontalOptions="FillAndExpand"/>
-					<Button  Grid.Row="2" Grid.Column="1" Text="Изменить" Command="{Binding NextCommand}" Style="{StaticResource EditButton}"  HorizontalOptions="FillAndExpand" />
+					<Button  Grid.Row="2" Grid.Column="1" Text="Изменить" Command="{Binding SelectAddressCommand}" Style="{StaticResource EditButton}"  HorizontalOptions="FillAndExpand" />
 			</Grid>
 
 

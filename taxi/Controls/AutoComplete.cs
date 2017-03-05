@@ -24,9 +24,33 @@ namespace taxi
 		public static BindableProperty ItemsSourceProperty = BindableProperty.Create("ItemsSource",typeof(List<string>),typeof(AutoComplete), propertyChanged: onItemSourceChanged);
 		public static BindableProperty DoneCommandProperty = BindableProperty.Create("DoneCommand",typeof(ICommand),typeof(AutoComplete));
 		public static BindableProperty TextChangedCommandProperty = BindableProperty.Create("TextChangedCommand",typeof(ICommand),typeof(AutoComplete));
+		public static BindableProperty PlaceHolderProperty = BindableProperty.Create(nameof(PlaceHolder), typeof(string), typeof(AutoComplete), propertyChanged: onPlaceHolderPropertyChanged);
+
+		static void onPlaceHolderPropertyChanged(BindableObject bindable, object oldValue, object newValue)
+		{
+			var control = bindable as AutoComplete;
+			if (control != null)
+			{
+				control.entry.Placeholder = newValue as string;
+			}
+		}
+
 		#endregion
 
 		#region Properties
+
+		public string PlaceHolder
+		{
+			get
+			{
+				return (string)GetValue(PlaceHolderProperty);
+			}
+			set
+			{
+				SetValue(PlaceHolderProperty, value);
+			}
+		}
+
 
 		public string Text
 		{
@@ -108,6 +132,9 @@ namespace taxi
 
 			}
 		}
+
+
+
         #endregion
 
 
@@ -118,7 +145,7 @@ namespace taxi
 				Text = "Далее"
 			};
 			button.Clicked += onDoneButtonClicked;
-				
+			button.Style = (Style)Application.Current.Resources["ConfirmButton"];
 				      
 			Orientation = StackOrientation.Vertical;
 
@@ -127,7 +154,7 @@ namespace taxi
 			};
 
 			entry.TextChanged += onEntryTextChanged;
-			entry.Placeholder = "Введите адрес назначения";
+			//entry.Placeholder = "Введите адрес назначения";
 			//entry.PlaceholderColor = Color.Gray;
 		
 

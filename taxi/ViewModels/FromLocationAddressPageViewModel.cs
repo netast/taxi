@@ -1,17 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
-using taxi.Service;
-using System.Collections.Generic;
-using System.Windows.Input;
 using Prism.Commands;
-using System.Diagnostics;
-using System.Linq;
+using taxi.Service;
 
 namespace taxi
 {
-	public class DestinationPageViewModel : BindableBase, INavigationAware
+	public class FromLocationAddressPageViewModel : BindableBase, INavigationAware
 	{
 		IPageDialogService _dialogService;
 		ITaxiService _taxiService;
@@ -19,7 +18,7 @@ namespace taxi
 
 		OrderRequest _order;
 
-		public DestinationPageViewModel(IPageDialogService dialogService, ITaxiService taxiService,INavigationService navigationService)
+		public FromLocationAddressPageViewModel(IPageDialogService dialogService, ITaxiService taxiService, INavigationService navigationService)
 		{
 			_dialogService = dialogService;
 			_taxiService = taxiService;
@@ -28,24 +27,29 @@ namespace taxi
 
 
 		private string text;
-		public string Text{
-			get{
+		public string Text
+		{
+			get
+			{
 				return text;
 			}
-			set{
+			set
+			{
 				text = value;
 				OnPropertyChanged(nameof(Text));
 			}
 		}
 
 		private List<string> itemsSource;
-		public List<string> ItemsSource{
-			get{
+		public List<string> ItemsSource
+		{
+			get
+			{
 				return itemsSource;
 			}
 			set
 			{
-				if( value == itemsSource)
+				if (value == itemsSource)
 					return;
 
 				itemsSource = value;
@@ -54,17 +58,23 @@ namespace taxi
 		}
 
 		private DelegateCommand textChangedCommand;
-		public DelegateCommand TextChangedCommand{
-			get{
-				return textChangedCommand = textChangedCommand ?? new DelegateCommand(async () => {
-					try{
+		public DelegateCommand TextChangedCommand
+		{
+			get
+			{
+				return textChangedCommand = textChangedCommand ?? new DelegateCommand(async () =>
+				{
+					try
+					{
 						var result = await _taxiService.GetStreetsOrPlacesAsync(Text);
 						//if(result != null && result.Length > 0)
-							ItemsSource = result.ToList();
-					}catch(Exception ex){
-						#if DEBUG
+						ItemsSource = result.ToList();
+					}
+					catch (Exception ex)
+					{
+#if DEBUG
 						Debug.WriteLine("Error getting street list " + ex.Message);
-						#endif
+#endif
 					}
 
 				});
@@ -73,19 +83,19 @@ namespace taxi
 
 
 		private DelegateCommand doneCommand;
-		public DelegateCommand DoneCommand
+		public DelegateCommand DoneCommand 
 		{
-			get
+			get 
 			{
-				return doneCommand = doneCommand ?? new DelegateCommand(async () =>
-				{
-					_order.ToStreet = Text;
+				return doneCommand = doneCommand ?? new DelegateCommand(async () => {
+					_order.FromStreet = Text;
 					var navParams = new NavigationParameters();
 					navParams.Add("Order", _order);
-					await _navigationService.NavigateAsync("OrderPage", navParams);
+					await _navigationService.NavigateAsync("DestinationPage", navParams);
 				});
 			}
 		}
+
 
 		public void OnNavigatedFrom(NavigationParameters parameters)
 		{
@@ -96,6 +106,10 @@ namespace taxi
 		{
 			var order = parameters["Order"] as OrderRequest;
 			_order = order;
+			if (_order != null && !string.IsNullOrEmpty(_order.FromStreet)) 
+			{
+				Text = _order.FromStreet;
+			}
 		}
 	}
 }

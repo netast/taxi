@@ -45,6 +45,12 @@
     <EmbeddedResource Include="Images\ic_my_location_black_24dp.png" />
     <EmbeddedResource Include="Images\ic_my_location_black_48dp.png" />
     <EmbeddedResource Include="Images\man.png" />
+    <EmbeddedResource Include="Views\FromLocationAddressPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\OrderPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -75,6 +81,14 @@
       <DependentUpon>LocationButton.xaml</DependentUpon>
     </Compile>
     <Compile Include="Extensions\ImageResourceExtension.cs" />
+    <Compile Include="Views\FromLocationAddressPage.xaml.cs">
+      <DependentUpon>FromLocationAddressPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\FromLocationAddressPageViewModel.cs" />
+    <Compile Include="Views\OrderPage.xaml.cs">
+      <DependentUpon>OrderPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModels\OrderPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Prism">

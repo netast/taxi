@@ -5,6 +5,8 @@ using Xamarin.Forms.GoogleMaps;
 using System.Windows.Input;
 using Prism.Commands;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using Prism.Navigation;
 
 namespace taxi
 {
@@ -13,11 +15,14 @@ namespace taxi
 		private bool gpsGot = false;
 		GeographicLocation currentGeographicLocation;
 		ILocationTracker _locationTracker;
+		INavigationService _navigationService;
 		private Geocoder geocoder = new Geocoder();
+		private const double deltaMeters = 100;
 
-		public FromLocationPageViewModel(ILocationTracker locationTracker)
+		public FromLocationPageViewModel(ILocationTracker locationTracker, INavigationService navigationService)
 		{
 			_locationTracker = locationTracker;
+			_navigationService = navigationService;
 			init();
 		}
 
@@ -156,6 +161,10 @@ namespace taxi
 			}
 		}
 
+
+
+
+		private CameraPosition lastPosition;
 		private Command cameraPositionCommand;
 		public Command CameraPositionCommand
 		{
@@ -163,21 +172,34 @@ namespace taxi
 			{
 				return cameraPositionCommand = cameraPositionCommand ?? new Command(async (parameter) =>
 				{
-				var position = parameter as CameraPosition;
-					if (position != null)
+					
+				    var position = parameter as CameraPosition;
+
+					if (lastPosition != null && position != null) 
 					{
-						CenterLocation = (new GeographicLocation(position.Target.Latitude, position.Target.Longitude)).ToString();
-						SearchResult = "Ищем Вас ..";
-						var streets = await geocoder.GetAddressesForPositionAsync(new Position(position.Target.Latitude, position.Target.Longitude));
-						var enumerator = streets.GetEnumerator();
-						enumerator.MoveNext();
-						SearchResult = "Я здесь";
-						var place = enumerator.Current;
-						FromPlace = place != null ? place.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)[0] : "Не найдено";
-#if DEBUG
-						Debug.WriteLine(place);
-#endif
+						var positionChange = measurePositionDelta(lastPosition.Target.Latitude, lastPosition.Target.Longitude, position.Target.Latitude, position.Target.Longitude);
+						if (positionChange < deltaMeters)
+							return;
 					}
+
+
+				
+						if (position != null)
+						{
+							CenterLocation = (new GeographicLocation(position.Target.Latitude, position.Target.Longitude)).ToString();
+							SearchResult = "Ищем Вас ..";
+							var streets = await geocoder.GetAddressesForPositionAsync(new Position(position.Target.Latitude, position.Target.Longitude));
+							var enumerator = streets.GetEnumerator();
+							enumerator.MoveNext();
+							SearchResult = "Я здесь";
+							var place = enumerator.Current;
+							FromPlace = place != null ? place.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)[0] : "Не найдено";
+#if DEBUG
+							Debug.WriteLine(place);
+#endif
+						lastPosition = (CameraPosition)parameter;
+						}
+
 				});
 			}
 		}
@@ -197,6 +219,30 @@ namespace taxi
 		}
 
 
+		private Command selectAddressCommand;
+		public Command SelectAddressCommand
+		{
+			get 
+			{
+				return new Command(async () => {
+					var navParams = new NavigationParameters();
+					navParams.Add("Order", new OrderRequest { FromStreet =  FromPlace , Time = DateTime.Now});
+					await _navigationService.NavigateAsync("FromLocationAddressPage",navParams);
+				});
+			}
+		}
 
+		private double measurePositionDelta(double lat1,double lon1,double lat2,double lon2)
+		{  
+			var R = 6378.137; // Radius of earth in KM
+			var dLat = lat2 * Math.PI / 180 - lat1 * Math.PI / 180;
+			var dLon = lon2 * Math.PI / 180 - lon1 * Math.PI / 180;
+			var a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+			Math.Cos(lat1 * Math.PI / 180) * Math.Cos(lat2 * Math.PI / 180) *
+			Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+			var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+			var d = R * c;
+			return d * 1000; // meters
+		}
 }
 }
