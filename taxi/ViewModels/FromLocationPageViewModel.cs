@@ -19,8 +19,8 @@ namespace taxi
 		private Geocoder geocoder = new Geocoder();
 		private const double deltaMeters = 100;
 		Timer timer;
-
-
+		private CameraPosition lastProcessedPosition;
+		private CameraPosition lastPosition;
 
 		public FromLocationPageViewModel(ILocationTracker locationTracker, INavigationService navigationService)
 		{
@@ -35,10 +35,20 @@ namespace taxi
 			_locationTracker.LocationChanged += onLocationChanged;
 			_locationTracker.StartTracking();
 
-			timer = new Timer((a) => {
-
+			timer = new Timer(async (a) => {
 				Debug.WriteLine("Tick");
-			}, null, 1000, 500);
+				if (lastProcessedPosition != null && lastProcessedPosition == lastPosition)
+					return;
+
+				if (lastPosition == null)
+					return;
+
+				lastProcessedPosition = lastPosition;
+				await processPosition(lastProcessedPosition);
+
+
+
+			}, null, 500, 500);
 		}
 
 		void onLocationChanged(object sender, GeographicLocation e)
@@ -172,42 +182,28 @@ namespace taxi
 
 
 
-		private CameraPosition lastPosition;
+
 		private Command cameraPositionCommand;
 		public Command CameraPositionCommand
 		{
 			get
 			{
-				return cameraPositionCommand = cameraPositionCommand ?? new Command(async (parameter) =>
+				return cameraPositionCommand = cameraPositionCommand ?? new Command((parameter) =>
 				{
 					
 				    var position = parameter as CameraPosition;
+					lastPosition = position;
 
-					if (lastPosition != null && position != null) 
-					{
-						var positionChange = measurePositionDelta(lastPosition.Target.Latitude, lastPosition.Target.Longitude, position.Target.Latitude, position.Target.Longitude);
-						if (positionChange < deltaMeters)
-							return;
-					}
+					//if (lastPosition != null && position != null) 
+					//{
+					//	var positionChange = measurePositionDelta(lastPosition.Target.Latitude, lastPosition.Target.Longitude, position.Target.Latitude, position.Target.Longitude);
+					//	if (positionChange < deltaMeters)
+					//		return;
+					//}
 
 
 				
-						if (position != null)
-						{
-							CenterLocation = (new GeographicLocation(position.Target.Latitude, position.Target.Longitude)).ToString();
-							SearchResult = "Ищем Вас ..";
-							var streets = await geocoder.GetAddressesForPositionAsync(new Position(position.Target.Latitude, position.Target.Longitude));
-							var enumerator = streets.GetEnumerator();
-							enumerator.MoveNext();
-							SearchResult = "Я здесь";
-							var place = enumerator.Current;
-							FromPlace = place != null ? place.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)[0] : "Не найдено";
-#if DEBUG
-							Debug.WriteLine(place);
-#endif
-						lastPosition = (CameraPosition)parameter;
-						}
-
+						
 				});
 			}
 		}
@@ -251,6 +247,27 @@ namespace taxi
 			var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
 			var d = R * c;
 			return d * 1000; // meters
+		}
+
+
+		private async Task processPosition(CameraPosition position)
+		{
+			if (position != null)
+			{
+				CenterLocation = (new GeographicLocation(position.Target.Latitude, position.Target.Longitude)).ToString();
+				SearchResult = "Ищем Вас ..";
+				var streets = await geocoder.GetAddressesForPositionAsync(new Position(position.Target.Latitude, position.Target.Longitude));
+				var enumerator = streets.GetEnumerator();
+				enumerator.MoveNext();
+				SearchResult = "Я здесь";
+				var place = enumerator.Current;
+				FromPlace = place != null ? place.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)[0] : "Не найдено";
+#if DEBUG
+				Debug.WriteLine(place);
+#endif
+
+			}
+
 		}
 }
 }
