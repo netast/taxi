@@ -18,6 +18,9 @@ namespace taxi
 		INavigationService _navigationService;
 		private Geocoder geocoder = new Geocoder();
 		private const double deltaMeters = 100;
+		Timer timer;
+
+
 
 		public FromLocationPageViewModel(ILocationTracker locationTracker, INavigationService navigationService)
 		{
@@ -31,6 +34,11 @@ namespace taxi
 			MyLocation = "No Data";
 			_locationTracker.LocationChanged += onLocationChanged;
 			_locationTracker.StartTracking();
+
+			timer = new Timer((a) => {
+
+				Debug.WriteLine("Tick");
+			}, null, 1000, 500);
 		}
 
 		void onLocationChanged(object sender, GeographicLocation e)
@@ -224,7 +232,7 @@ namespace taxi
 		{
 			get 
 			{
-				return new Command(async () => {
+				return selectAddressCommand = selectAddressCommand ?? new Command(async () => {
 					var navParams = new NavigationParameters();
 					navParams.Add("Order", new OrderRequest { FromStreet =  FromPlace , Time = DateTime.Now});
 					await _navigationService.NavigateAsync("FromLocationAddressPage",navParams);

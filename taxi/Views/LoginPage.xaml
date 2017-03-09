@@ -2,9 +2,9 @@
 <ContentPage 
 		xmlns="http://xamarin.com/schemas/2014/forms"
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" 
-		prism:ViewModelLocator.AutowireViewModel="True" 
-		x:Class="taxi.Views.LoginPage">
+		xmlns:design="clr-namespace:taxi;assembly=taxi;"
+	    BindingContext="{x:Static design:ViewModelLocator.LoginPageViewModel}"
+     	x:Class="taxi.Views.LoginPage">
 	
 	<Grid >
 		<Grid.RowDefinitions>
@@ -28,16 +28,16 @@
 			<ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
 			<Image Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Start" Source="TaxiLogo.png" WidthRequest="300" Aspect="AspectFit"/>
-		    <Label Grid.Row="1" Grid.Column="0" TextColor="{StaticResource HeaderFGColor}" HorizontalOptions="Start" Text="Добрый день, 9039818881" VerticalTextAlignment="Center" VerticalOptions="Center" />
-	     	<Button Grid.Row="1" Grid.Column="1" HorizontalOptions ="End" Text="Выход"/>
+		  <!--  <Label Grid.Row="1" Grid.Column="0" TextColor="{StaticResource HeaderFGColor}" HorizontalOptions="Start" Text="Добрый день, 9039818881" VerticalTextAlignment="Center" VerticalOptions="Center" />
+	     	<Button Grid.Row="1" Grid.Column="1" HorizontalOptions ="End" Text="Выход"/>-->
 		</Grid >
 
 		<!--<Label Grid.Row="2" Text="Вход" HorizontalOptions="Center" FontSize="24" HorizontalTextAlignment="Center"/>-->
 		<Entry Grid.Row="3" HorizontalOptions="Center" WidthRequest="200" Placeholder="Телефон" Text="{Binding PhoneNumber}" />
 		<Entry Grid.Row="4" HorizontalOptions="Center" WidthRequest="200" Placeholder="Пароль" Text="{Binding Password}" />
 		<StackLayout Grid.Row="5" Orientation="Horizontal" HorizontalOptions="Center">
-			<Button Text="Выслать Пароль" Command="{Binding SendPasswordCommand}" />
-			<Button Text="Войти" Command="{Binding LoginCommand}" />
+			<Button Text="Выслать Пароль" Command="{Binding SendPasswordCommand}" Style="{StaticResource EditButton}" />
+			<Button Text="Войти" Command="{Binding LoginCommand}" Style="{StaticResource ConfirmButton}" />
 		</StackLayout>
 
 	</Grid>

@@ -89,6 +89,8 @@
       <DependentUpon>OrderPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\OrderPageViewModel.cs" />
+    <Compile Include="Timer.cs" />
+    <Compile Include="ViewModelLocator.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Prism">

@@ -16,6 +16,8 @@ namespace taxi
 
 		protected override void OnInitialized()
 		{
+			Resolver = Container;
+
 			InitializeComponent();
 			//NavigationService.NavigateAsync("NavigationPage/LoginPage");
 
@@ -39,5 +41,8 @@ namespace taxi
 			Container.RegisterType<ITaxiService, TaxiService>(new ContainerControlledLifetimeManager());
 			#endregion
 		}
+
+
+		public static IUnityContainer Resolver { get; set; }
 	}
 }

@@ -6,7 +6,7 @@ namespace taxi.Service
 	public interface ITaxiService
 	{
 		
-		Task<bool> LoginMobileAsync(string login, string password);
+		Task<TaxiRequestResult> LoginMobileAsync(string login, string password);
 		Task<TaxiRequestResult> ActivateClientBySMSAsync(string phoneNumber);
 		Task<string[]> GetStreetsOrPlacesAsync(string term);
 		Task<WebOrder> GetOrderInfoAsync(string streetOrPlace, 

@@ -78,11 +78,11 @@ namespace taxi.ViewModels
 						return;
 					}
 
-					//var result = await _taxiService.LoginMobileAsync(PhoneNumber,Password);
+					var loginResult = await _taxiService.LoginMobileAsync(PhoneNumber,Password);
 
-					//if(!result){
-					//	await _dialogService.DisplayAlertAsync("Passsword or phone number is incorrect","Login","OK");
-					//}
+					if(!loginResult.result){
+						await _dialogService.DisplayAlertAsync("Passsword or phone number is incorrect","Login","OK");
+					}
 
 					await _navigationService.NavigateAsync("FromLocationPage");
 

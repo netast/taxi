@@ -21,15 +21,20 @@ namespace taxi.Service
 
 
 				var response = await httpClient.GetAsync(url);
-
-				var content = await response.Content.ReadAsStringAsync();
-				var loginResult = JsonConvert.DeserializeObject<TaxiRequestResult>(content);
-				if (loginResult.result)
+				if (response.IsSuccessStatusCode)
 				{
 
+					var content = await response.Content.ReadAsStringAsync();
+					var loginResult = JsonConvert.DeserializeObject<TaxiRequestResult>(content);
+					loginResult.result = true;					
 					authCookieContainer = tempCookieContainer;
+					return loginResult;
 				}
-				return loginResult;
+				else {
+					return new TaxiRequestResult { result = false, message = "Login or password incorrect" };
+				
+				}
+
 			}
 
 

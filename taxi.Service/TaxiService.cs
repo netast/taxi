@@ -44,18 +44,26 @@ namespace taxi.Service
 			return result;
 		}
 
-		public async Task<bool> LoginMobileAsync(string phoneNumber, string password)
+		public async Task<TaxiRequestResult> LoginMobileAsync(string phoneNumber, string password)
 		{
-			var url = baseUrl + "Login/LoginMobile";
+			var url = baseUrl + $"api/account/login?phoneNumber={phoneNumber}&password={password}";
 
-			var requestParams = new List<KeyValuePair<string,string>>();
-			requestParams.Add(new KeyValuePair<string, string>(nameof(phoneNumber),phoneNumber));
-			requestParams.Add(new KeyValuePair<string, string>(nameof(password),password));
+			try
+			{
 
-			var result =  await _restService.PostAsync<TaxiRequestResult>(url,requestParams);
+				var loginResult = await _restService.LoginAsync(url);
 
-			return result != null && result.result;
+				return loginResult;
+			}
+			catch (Exception ex) {
 
+				var faultResult = new TaxiRequestResult();
+
+				faultResult.result = false;
+				faultResult.message = ex.Message;
+
+				return faultResult;
+			}
 		}
 	}
 }
