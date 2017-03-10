@@ -9,14 +9,7 @@ namespace taxi.Service
 		Task<TaxiRequestResult> LoginMobileAsync(string login, string password);
 		Task<TaxiRequestResult> ActivateClientBySMSAsync(string phoneNumber);
 		Task<string[]> GetStreetsOrPlacesAsync(string term);
-		Task<WebOrder> GetOrderInfoAsync(string streetOrPlace, 
-		                                 string house, 
-		                                 string[] dstStreetOrPlaces, 
-		                                 string[] dstHouses, 
-		                                 int classID, 
-		                                 bool isBarter, 
-		                                 bool specifiedDateTime, 
-		                                 string dateTime);
+		Task<WebOrderInfo> GetOrderInfoAsync(WebOrder webOrder);
 		Task<TaxiRequestResult> AddOrderAsync(string sourceStreetOrPlace, 
 		                                string sourceHouse, 
 		                                string[] interimAddress, 

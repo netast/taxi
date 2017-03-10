@@ -2,8 +2,16 @@
 <ContentPage 
 	xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-	x:Class="taxi.OrderPage">
-	<Grid Margin="10">
+	x:Class="taxi.OrderPage"
+	Title="Заказ"
+	>
+	<Grid>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<ScrollView Grid.Row="0">
+			<Grid Margin="10">
 		<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
@@ -11,25 +19,51 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
-			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+					<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
+	        <ColumnDefinition Width="Auto" />
 			<ColumnDefinition Width="Auto" />
-			<ColumnDefinition Width="*" />
+	        <ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-     		<Label Grid.Row="0" Grid.Column="0" Text="Забрать:" />
-		    <Label Grid.Row="0" Grid.Column="1" Text="{Binding Order.FromStreet}" />
-      		<Label Grid.Row="1" Grid.Column="0" Text="Подъезд:" />
-		    <Label Grid.Row="1" Grid.Column="1" Text="{Binding Order.Comment}" />
-     		<Label Grid.Row="2" Grid.Column="0" Text="Назначение:" />
-    		<Label Grid.Row="2" Grid.Column="1" Text="{Binding Order.ToStreet}" />
-		    <Label Grid.Row="3" Grid.Column="0" Text="Ближайшее время:" />
-		    <Switch Grid.Row="3" Grid.Column="1"  IsToggled="{Binding SetTime}" />
-		    <Label Grid.Row="4" Grid.Column="0" Text="Назначить время:" IsVisible="{Binding SetTime}" />
-		    <DatePicker Grid.Row="4" Grid.Column="1" IsVisible="{Binding SetTime}"   Date="{Binding OrderDate}" />
-		    <Label Grid.Row="5" Grid.Column="0" Text="Назначить время:" IsVisible="{Binding SetTime}" />
-		    <TimePicker Grid.Row="5" Grid.Column="1" IsVisible="{Binding SetTime}"   Time="{Binding OrderTime}" />
-		<Button Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Text="Далее" HorizontalOptions="End" Style="{StaticResource ConfirmButton}" />
+     		<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Откуда" FontAttributes="Bold" HorizontalOptions="FillAndExpand" BackgroundColor="Silver"/>
+	    	<Label Grid.Row="1" Grid.Column="0" Text="Улица:" />
+		    <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding FromStreet}" TextColor="Black" >
+					<Label.GestureRecognizers>
+                         <TapGestureRecognizer
+                              Command="{Binding FromStreetTeppedCommand}"/>
+                    </Label.GestureRecognizers>
+			</Label>
+		    <Label Grid.Row="2" Grid.Column="0" Text="Дом:" />
+		    <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Order.FromHouse}" IsEnabled="true"  />
+      		<Label Grid.Row="3" Grid.Column="0" Text="Подъезд:" />
+   		    <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Order.Comment}" />
+		    <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Text="Куда"  FontAttributes="Bold" HorizontalOptions="FillAndExpand" BackgroundColor="Silver"/>
+		    <Label Grid.Row="5" Grid.Column="0" Text="Улица:" />
+    		<Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ToStreet}" >
+    		        <Label.GestureRecognizers>
+                         <TapGestureRecognizer
+                              Command="{Binding ToStreetTeppedCommand}"/>
+                    </Label.GestureRecognizers>
+				</Label>
+		    <Label Grid.Row="6" Grid.Column="0" Text="Дом:" />
+		    <Entry Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Order.ToHouse}" IsEnabled="true" />
+		    <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Text="Ближайшее время:" />
+		    <Switch Grid.Row="7" Grid.Column="2"  IsToggled="{Binding SetTime}" />
+		    <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Text="Назначить время:" IsVisible="{Binding SetTime}" />
+		    <DatePicker Grid.Row="8" Grid.Column="2" IsVisible="{Binding SetTime}"   Date="{Binding OrderDate}" />
+		    <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Text="Назначить время:" IsVisible="{Binding SetTime}" />
+		    <TimePicker Grid.Row="9" Grid.Column="2" IsVisible="{Binding SetTime}"   Time="{Binding OrderTime}" />
+		
+	  </Grid>
+		</ScrollView>
+	     <Button Grid.Row="1" Text="Далее" HorizontalOptions="End" Style="{StaticResource ConfirmButton}" Command="{Binding CalculateCommand}" />
 	</Grid>
+
 </ContentPage>

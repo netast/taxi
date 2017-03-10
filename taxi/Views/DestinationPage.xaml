@@ -5,7 +5,9 @@
 		xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms" 
 		prism:ViewModelLocator.AutowireViewModel="True" 
 		xmlns:local="clr-namespace:taxi;assembly=taxi"
-		x:Class="taxi.DestinationPage">
+		x:Class="taxi.DestinationPage"
+		Title="Улица"
+	>
 	<ContentPage.Content>
 		<StackLayout Orientation="Vertical">
 			 <Label Text="Адрес прибытия" />

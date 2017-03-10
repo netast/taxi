@@ -3,9 +3,10 @@
 	xmlns="http://xamarin.com/schemas/2014/forms" 
 	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
 	xmlns:local="clr-namespace:taxi;assembly=taxi"
-	x:Class="taxi.FromLocationAddressPage">
+	x:Class="taxi.FromLocationAddressPage"
+	Title="Улица"
+	>
 		<StackLayout Orientation="Vertical" Margin="5" >
-		    <Label Text="Введите адрес подачи" />
 			<local:AutoComplete 
 		                 TextChangedCommand="{Binding TextChangedCommand}" 
 		                 Text="{Binding Text}" 

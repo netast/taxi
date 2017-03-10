@@ -1,14 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using Prism.Mvvm;
 using Prism.Navigation;
+using taxi.Model;
+using taxi.Service;
+using Xamarin.Forms;
 
 namespace taxi
 {
 	public class OrderPageViewModel : BindableBase, INavigationAware
 	{
 		INavigationService _navigationService;
+		ITaxiService _taxiService;
 
-
+		public OrderPageViewModel(INavigationService navigationService, ITaxiService taxiService)
+		{
+			_taxiService = taxiService;
+			_navigationService = navigationService;
+		}
 
 		private OrderRequest _order;
 		public OrderRequest Order 
@@ -79,6 +89,44 @@ namespace taxi
 		}
 
 
+
+		public string FromStreet 
+		{
+			get 
+			{
+				return Order?.FromStreet;
+			}
+			set {
+				if (Order == null)
+					return;
+
+				if (Order.FromStreet == value)
+					return;
+
+				Order.FromStreet = value;
+				OnPropertyChanged(nameof(FromStreet));
+			}
+		}
+
+		public string ToStreet
+		{
+			get
+			{
+				return Order?.ToStreet;
+			}
+			set
+			{
+				if (Order == null)
+					return;
+
+				if (Order.ToStreet == value)
+					return;
+
+				Order.ToStreet = value;
+				OnPropertyChanged(nameof(ToStreet));
+			}
+		}
+
 		public OrderPageViewModel(INavigationService navigationService)
 		{
 			_navigationService = navigationService;
@@ -87,14 +135,64 @@ namespace taxi
 
 		public void OnNavigatedFrom(NavigationParameters parameters)
 		{
+			
 		}
 
 		public void OnNavigatedTo(NavigationParameters parameters)
 		{
 			var order = parameters["Order"] as OrderRequest;
 			Order = order;
+			if (order == null)
+				return;
 			OrderTime = Order.Time.TimeOfDay;
 			OrderDate = Order.Time;
+			OnPropertyChanged(nameof(FromStreet));
+			OnPropertyChanged(nameof(ToStreet));
+		}
+
+
+
+		public Command FromStreetTeppedCommand 
+		{
+			get {
+				return new Command(async () => {
+					Debug.WriteLine("From Street Tapped");
+					var navParam = new NavigationParameters();
+					navParam.Add("Order", Order);
+					await _navigationService.NavigateAsync("FromLocationAddressPage", navParam);
+				});
+			}
+		}
+
+		public Command ToStreetTeppedCommand
+		{
+			get
+			{
+				return new Command(async () =>
+				{
+					Debug.WriteLine("To Street Tapped");
+					var navParam = new NavigationParameters();
+					navParam.Add("Order", Order);
+					await _navigationService.NavigateAsync("DestinationPage", navParam);
+				});
+			}
+		}
+
+
+		public Command CalculateCommand
+		{
+			get 
+			{
+				return new Command(async ()=>
+				{
+					var newWebOrder = new WebOrder();
+					newWebOrder.SrcAddress = new WebOrderAddress(Order.FromStreet, Order.FromHouse);
+					newWebOrder.DstAddresses = new List<WebOrderAddress> { new WebOrderAddress(Order.ToStreet, Order.ToHouse) };
+
+					var result = await _taxiService.GetOrderInfoAsync(newWebOrder);
+
+				});
+			}
 		}
 	}
 }

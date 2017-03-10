@@ -172,10 +172,7 @@ namespace taxi
 		{
 			get
 			{
-				return new Command(() =>
-				{
-
-				});
+				return new Command(async () => await gotoOrderPage());
 			}
 		}
 
@@ -228,13 +225,18 @@ namespace taxi
 		{
 			get 
 			{
-				return selectAddressCommand = selectAddressCommand ?? new Command(async () => {
-					var navParams = new NavigationParameters();
-					navParams.Add("Order", new OrderRequest { FromStreet =  FromPlace , Time = DateTime.Now});
-					await _navigationService.NavigateAsync("FromLocationAddressPage",navParams);
-				});
+				return selectAddressCommand = selectAddressCommand ?? new Command(async()=> await gotoOrderPage());
 			}
 		}
+
+
+
+		private async Task gotoOrderPage () 
+		{
+			var navParams = new NavigationParameters();
+		    navParams.Add("Order", new OrderRequest { FromStreet =  FromPlace , Time = DateTime.Now});
+					await _navigationService.NavigateAsync("/NavigationPage/OrderPage", navParams);
+         }
 
 		private double measurePositionDelta(double lat1,double lon1,double lat2,double lon2)
 		{  

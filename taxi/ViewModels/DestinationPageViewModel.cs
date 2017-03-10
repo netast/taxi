@@ -92,10 +92,16 @@ namespace taxi
 			
 		}
 
-		public void OnNavigatedTo(NavigationParameters parameters)
+	
+			public void OnNavigatedTo(NavigationParameters parameters)
 		{
 			var order = parameters["Order"] as OrderRequest;
 			_order = order;
+			if (_order != null && !string.IsNullOrEmpty(_order.ToStreet))
+			{
+				Text = _order.ToStreet;
+			}
 		}
+
 	}
 }

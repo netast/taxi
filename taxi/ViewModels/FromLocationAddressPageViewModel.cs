@@ -91,7 +91,7 @@ namespace taxi
 					_order.FromStreet = Text;
 					var navParams = new NavigationParameters();
 					navParams.Add("Order", _order);
-					await _navigationService.NavigateAsync("DestinationPage", navParams);
+					await _navigationService.GoBackAsync(navParams);
 				});
 			}
 		}

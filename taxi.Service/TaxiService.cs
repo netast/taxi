@@ -32,9 +32,12 @@ namespace taxi.Service
 			throw new NotImplementedException();
 		}
 
-		public Task<WebOrder> GetOrderInfoAsync(string streetOrPlace, string house, string[] dstStreetOrPlaces, string[] dstHouses, int classID, bool isBarter, bool specifiedDateTime, string dateTime)
+		public async Task<WebOrderInfo> GetOrderInfoAsync(WebOrder webOrder)
 		{
-			throw new NotImplementedException();
+			var url = baseUrl + "api/webOrders/getOrderInfo";
+			var result = await _restService.PostAsync<WebOrder,WebOrderInfo>(url,webOrder);
+			return result;
+
 		}
 
 		public async Task<string[]> GetStreetsOrPlacesAsync(string term)
