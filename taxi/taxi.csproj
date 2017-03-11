@@ -91,6 +91,7 @@
     <Compile Include="ViewModels\OrderPageViewModel.cs" />
     <Compile Include="Timer.cs" />
     <Compile Include="ViewModelLocator.cs" />
+    <Compile Include="Converters\InverseBooleanConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Prism">
@@ -131,6 +132,7 @@
     <Folder Include="Service\" />
     <Folder Include="Images\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Converters\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\taxi.Service\taxi.Service.csproj">

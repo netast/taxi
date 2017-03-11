@@ -25,15 +25,20 @@ namespace taxi.ViewModels
 			#endif 
 		}
 
-		public DelegateCommand ShowMessageCommand
+		private bool isLoading;
+		public bool IsLoading
 		{
 			get{
-				return new DelegateCommand(()=>{
-					_dialogService.DisplayAlertAsync("Hello from Prism","Test Message","OK");
-				});
+				return isLoading;
+			}
+			set{
+				if(value != isLoading)
+				{
+					isLoading = value;
+					OnPropertyChanged(nameof(IsLoading));
+				}
 			}
 		}
-
 
 		public string PhoneNumber {get;set;}
 		public string Password {get;set;}
@@ -45,18 +50,19 @@ namespace taxi.ViewModels
 			get{
 			return sendPasswordCommand = sendPasswordCommand ?? new DelegateCommand(async ()=>{
 					if(string.IsNullOrEmpty(PhoneNumber)){
-						await _dialogService.DisplayAlertAsync("Phone Number must be entered","Missing Login","OK");
+						await _dialogService.DisplayAlertAsync("Телефон","Введите номер телефона","OK");
 						return;
 					}
 						
-
+					IsLoading = true;
 					var result = await _taxiService.ActivateClientBySMSAsync(PhoneNumber);
-					if(result.result){
-						await _dialogService.DisplayAlertAsync("Failed to ask for password, check internet connection " + result.message,"SMS password","OK");
+					IsLoading = false;
+					if(!result.result){
+						await _dialogService.DisplayAlertAsync("Пароль","Не удалось запросить пароль, проверьте соединение " + result.message,"OK");
 					}
 					else
 					{
-						await _dialogService.DisplayAlertAsync("Passsword was sent","SMS password","OK");
+						await _dialogService.DisplayAlertAsync("Пароль",result.message,"OK");
 					}
 				});
 			}
@@ -69,19 +75,19 @@ namespace taxi.ViewModels
 			{
 				return loginCommand = loginCommand ?? new DelegateCommand(async ()=>{
 					if(string.IsNullOrEmpty(PhoneNumber)){
-						await _dialogService.DisplayAlertAsync("Phone Number must be entered","Missing Login","OK");
+						await _dialogService.DisplayAlertAsync("Телефон","Введите номер телефона","OK");
 						return;
 					}
 
 					if(string.IsNullOrEmpty(Password)){
-						await _dialogService.DisplayAlertAsync("Password must be entered","Missing Password","OK");
+						await _dialogService.DisplayAlertAsync("Пароль","Не удалось запросить пароль, проверьте соединение","OK");
 						return;
 					}
-
+					IsLoading = true;
 					var loginResult = await _taxiService.LoginMobileAsync(PhoneNumber,Password);
-
+					IsLoading = false;
 					if(!loginResult.result){
-						await _dialogService.DisplayAlertAsync("Passsword or phone number is incorrect","Login","OK");
+						await _dialogService.DisplayAlertAsync("Номер телефона или пароль не верны ","Ошибка","OK");
 					}
 
 					await _navigationService.NavigateAsync("FromLocationPage");

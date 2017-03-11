@@ -17,9 +17,9 @@ namespace taxi.Service
 
 		public async Task<TaxiRequestResult> ActivateClientBySMSAsync(string phoneNumber)
 		{
-			var url = baseUrl+"Login/ActivateClientBySMS";
-			var result = await _restService.PostAsync<TaxiRequestResult>(url,new List<KeyValuePair<string, string>>{new KeyValuePair<string, string>(nameof(phoneNumber),phoneNumber)});
-			return result;
+			var url = baseUrl+"api/account/activateClientBySMS?phoneNumber="+phoneNumber;
+			var result = await _restService.GetAsync<MessageResult>(url);
+			return new TaxiRequestResult{ result = true, message = result.Message};
 		}
 
 		public Task<TaxiRequestResult> AddOrderAsync(string sourceStreetOrPlace, string sourceHouse, string[] interimAddress, string[] interimHomeNumber, string comments, bool isBarter, string pinCode, bool specifiedDateTime, string dateTime, int classID)

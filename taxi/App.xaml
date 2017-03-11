@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <prism:PrismApplication xmlns="http://xamarin.com/schemas/2014/forms" 
 		xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-		xmlns:prism="clr-namespace:Prism.Unity;Prism.Unity.Form"  
+		xmlns:prism="clr-namespace:Prism.Unity;Prism.Unity.Form" 
+	    xmlns:local="clr-namespace:taxi;assembly=taxi"
 		x:Class="taxi.App">
 	<Application.Resources>
 
-		<ResourceDictionary>				
+		<ResourceDictionary>
+			<!-- Converters -->
+			<local:InverseBooleanConverter x:Key="InverseBoolean" />
 			<!-- Colors -->
 			<OnPlatform x:TypeArguments="Color" x:Key="HeaderBGColor"   iOS="#C87328"  Android="#C87328"  WinPhone="#C87328"  />
 			<OnPlatform x:TypeArguments="Color" x:Key="HeaderFGColor"   iOS="#f4f5f7"  Android="#f4f5f7"  WinPhone="#f4f5f7"  />

@@ -34,6 +34,7 @@
     <Compile Include="WebOrderAddress.cs" />
     <Compile Include="OrderRequest.cs" />
     <Compile Include="WebOrderInfo.cs" />
+    <Compile Include="MessageResult.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

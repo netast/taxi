@@ -32,7 +32,13 @@
 			<ColumnDefinition Width="Auto" />
 	        <ColumnDefinition Width="*" />
 		</Grid.ColumnDefinitions>
-     		<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Откуда" FontAttributes="Bold" HorizontalOptions="FillAndExpand" BackgroundColor="Silver"/>
+     		<Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Text="Откуда" FontAttributes="Bold" 
+				HorizontalOptions="FillAndExpand" 
+				BackgroundColor="Silver" 
+				HorizontalTextAlignment="Center" 
+				HeightRequest="30"
+				VerticalTextAlignment="Center"
+				/>
 	    	<Label Grid.Row="1" Grid.Column="0" Text="Улица:" />
 		    <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding FromStreet}" TextColor="Black" >
 					<Label.GestureRecognizers>
@@ -44,7 +50,13 @@
 		    <Entry Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Order.FromHouse}" IsEnabled="true"  />
       		<Label Grid.Row="3" Grid.Column="0" Text="Подъезд:" />
    		    <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Order.Comment}" />
-		    <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Text="Куда"  FontAttributes="Bold" HorizontalOptions="FillAndExpand" BackgroundColor="Silver"/>
+		    <Label Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="3" Text="Куда"  FontAttributes="Bold" 
+				HorizontalOptions="FillAndExpand" 
+				BackgroundColor="Silver"
+				HorizontalTextAlignment="Center" 
+				HeightRequest="30"
+				VerticalTextAlignment="Center"
+				/>
 		    <Label Grid.Row="5" Grid.Column="0" Text="Улица:" />
     		<Label Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding ToStreet}" >
     		        <Label.GestureRecognizers>
