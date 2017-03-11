@@ -7,7 +7,7 @@ using taxi.Service;
 using Microsoft.Practices.Unity;
 using Xamarin.Forms.Xaml;
 
-//[assembly: XamlCompilation (XamlCompilationOptions.Compile)]
+[assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace taxi
 {
 	public partial class App : PrismApplication

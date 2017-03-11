@@ -12,30 +12,20 @@
 			<!-- Colors -->
 			<OnPlatform x:TypeArguments="Color" x:Key="HeaderBGColor"   iOS="#C87328"  Android="#C87328"  WinPhone="#C87328"  />
 			<OnPlatform x:TypeArguments="Color" x:Key="HeaderFGColor"   iOS="#f4f5f7"  Android="#f4f5f7"  WinPhone="#f4f5f7"  />
+			<OnPlatform x:TypeArguments="Thickness" x:Key="PagePadding"  iOS="0,20,0,0" Android="0,0,0,0" /> 
+			<OnPlatform x:TypeArguments="Thickness" x:Key="ConfirmButtonPadding"  iOS="10"  /> 
 		    <Style  x:Key="NavPage"  TargetType="ContentPage">
-				<Setter Property="Padding">
-					<Setter.Value>
-					  <OnPlatform x:TypeArguments="Thickness"  iOS="0,20,0,0" Android="0,0,0,0"/>
-					</Setter.Value>
-				</Setter>
+				<Setter Property="Padding" Value="{StaticResource PagePadding}" />		
 			</Style>
 			<Style x:Key="ConfirmButton" TargetType="Button">
 				<Setter Property="BackgroundColor" Value="#ff7a04" />
 				<Setter Property="TextColor" Value="#ffffff" />
-				<Setter Property="Margin">
-					<Setter.Value>
-						<OnPlatform x:TypeArguments="Thickness" iOS="10" />
-					</Setter.Value>
-				</Setter>
+				<Setter Property="Margin" Value="{StaticResource ConfirmButtonPadding}" />
 			</Style>
 			<Style x:Key="EditButton" TargetType="Button">
 				<Setter Property="BackgroundColor" Value="#05d9ff" />
 				<Setter Property="TextColor" Value="#ffffff" />
-				<Setter Property="Margin">
-					<Setter.Value>
-						<OnPlatform x:TypeArguments="Thickness" iOS="10" />
-					</Setter.Value>
-				</Setter>
+				<Setter Property="Margin" Value="{StaticResource ConfirmButtonPadding}" />
 			</Style>
 		</ResourceDictionary>
 	</Application.Resources>
