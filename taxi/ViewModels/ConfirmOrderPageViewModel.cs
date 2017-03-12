@@ -118,7 +118,7 @@ namespace taxi
 				IsDraggable = false,
 				IsVisible = true,
 				Label = "Старт",
-				Address= webOrder.SrcAddress.StreetOrPlace + ", " + webOrder.SrcAddress.House,
+				Address= webOrder.SrcAddress.StreetOrPlace + webOrder.SrcAddress.House != null ? ", " +  webOrder.SrcAddress.House : "",
 				Type = PinType.Generic
 			};
 
@@ -134,7 +134,7 @@ namespace taxi
 				IsVisible = true,
 				Label = "Финиш",
 				Type = PinType.Generic,
-				Address = webOrder.DstAddresses[0].StreetOrPlace + ", " + webOrder.DstAddresses[0].House
+				Address = webOrder.DstAddresses[0].StreetOrPlace + webOrder.DstAddresses[0].House != null ? ", " + webOrder.DstAddresses[0].House : ""
 			};
 
 
