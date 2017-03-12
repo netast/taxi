@@ -13,14 +13,16 @@ namespace taxi.ViewModels
 		ITaxiService _taxiService;
 		INavigationService _navigationService;
 
-		public LoginPageViewModel( IPageDialogService dialogService, ITaxiService taxiService,INavigationService navigationService)
+		public LoginPageViewModel( IPageDialogService dialogService, 
+		                           ITaxiService taxiService,
+		                           INavigationService navigationService)
 		{
 			_dialogService = dialogService;
 			_taxiService = taxiService;
 			_navigationService = navigationService;
 			#if DEBUG
 			PhoneNumber="9039818881";
-			Password="5514";
+			Password="8144";
 				
 			#endif 
 		}
@@ -88,6 +90,7 @@ namespace taxi.ViewModels
 					IsLoading = false;
 					if(!loginResult.result){
 						await _dialogService.DisplayAlertAsync("Номер телефона или пароль не верны ","Ошибка","OK");
+						return;
 					}
 
 					await _navigationService.NavigateAsync("FromLocationPage");

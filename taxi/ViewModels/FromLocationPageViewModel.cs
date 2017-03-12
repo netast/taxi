@@ -7,6 +7,7 @@ using Prism.Commands;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using Prism.Navigation;
+using taxi.Service;
 
 namespace taxi
 {
@@ -14,29 +15,39 @@ namespace taxi
 	{
 		private bool gpsGot = false;
 		GeographicLocation currentGeographicLocation;
+
 		ILocationTracker _locationTracker;
 		INavigationService _navigationService;
+		ITaxiService _taxiService;
+
+
 		private Geocoder geocoder = new Geocoder();
 		private const double deltaMeters = 100;
 		Timer timer;
 		private CameraPosition lastProcessedPosition;
 		private CameraPosition lastPosition;
+		private OrderRequest order;
 
-		public FromLocationPageViewModel(ILocationTracker locationTracker, INavigationService navigationService)
+		public FromLocationPageViewModel(ILocationTracker locationTracker, 
+		                                 INavigationService navigationService,
+										 ITaxiService taxiService )
 		{
 			_locationTracker = locationTracker;
 			_navigationService = navigationService;
+			_taxiService = taxiService;
 			init();
 		}
 
 		void init()
 		{
+
+			order = new OrderRequest();
 			MyLocation = "No Data";
 			_locationTracker.LocationChanged += onLocationChanged;
 			_locationTracker.StartTracking();
 
 			timer = new Timer(async (a) => {
-				Debug.WriteLine("Tick");
+			//	Debug.WriteLine("Tick");
 				if (lastProcessedPosition != null && lastProcessedPosition == lastPosition)
 					return;
 
@@ -234,7 +245,8 @@ namespace taxi
 		private async Task gotoOrderPage () 
 		{
 			var navParams = new NavigationParameters();
-		    navParams.Add("Order", new OrderRequest { FromStreet =  FromPlace , Time = DateTime.Now});
+			order.Time = DateTime.Now;
+			navParams.Add("Order", order);
 					await _navigationService.NavigateAsync("/NavigationPage/OrderPage", navParams);
          }
 
@@ -258,14 +270,24 @@ namespace taxi
 			{
 				CenterLocation = (new GeographicLocation(position.Target.Latitude, position.Target.Longitude)).ToString();
 				SearchResult = "Ищем Вас ..";
-				var streets = await geocoder.GetAddressesForPositionAsync(new Position(position.Target.Latitude, position.Target.Longitude));
-				var enumerator = streets.GetEnumerator();
-				enumerator.MoveNext();
-				SearchResult = "Я здесь";
-				var place = enumerator.Current;
-				FromPlace = place != null ? place.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)[0] : "Не найдено";
+
+				var lat = position.Target.Latitude;
+				var lon = position.Target.Longitude;
+
+				//var streets = await geocoder.GetAddressesForPositionAsync(new Position(lat, lon));
+				//var enumerator = streets.GetEnumerator();
+				//enumerator.MoveNext();
+				//
+				//var place = enumerator.Current;
+				//FromPlace = place != null ? place.Split(new string[] { Environment.NewLine }, StringSplitOptions.None)[0] : "Не найдено";
+				var addr = await _taxiService.GetAddressByCoord(lat, lon);
+				order.FromHouse = addr.House;
+				order.FromStreet = addr.StreetOrPlace;
+				FromPlace = addr != null ? addr.StreetOrPlace + ", " + addr.House : "";
 #if DEBUG
-				Debug.WriteLine(place);
+			 
+				Debug.WriteLine(FromPlace);
+				//Debug.WriteLine(place);
 #endif
 
 			}

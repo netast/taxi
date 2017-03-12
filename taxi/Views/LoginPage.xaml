@@ -14,11 +14,14 @@
 			<RowDefinition Height="Auto" />	
 			<RowDefinition Height="Auto" />	
 			<RowDefinition Height="Auto" />	
+			<RowDefinition Height="Auto" />	
+			<RowDefinition Height="Auto" />	
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
-
+		    <ColumnDefinition Width="1*" />    
+		    <ColumnDefinition Width="1*" />    		
 		</Grid.ColumnDefinitions>
-		<Grid Grid.Row="0" BackgroundColor="{StaticResource HeaderBGColor}" Padding="5">
+		<Grid Grid.Row="0" Grid.ColumnSpan="2" BackgroundColor="{StaticResource HeaderBGColor}" Padding="5">
 			<Grid.RowDefinitions>
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />					
@@ -33,13 +36,12 @@
 		</Grid >
 
 		<!--<Label Grid.Row="2" Text="Вход" HorizontalOptions="Center" FontSize="24" HorizontalTextAlignment="Center"/>-->
-		<Entry Grid.Row="3" HorizontalOptions="Center" WidthRequest="200" Placeholder="Телефон" Text="{Binding PhoneNumber}" IsEnabled="{Binding IsLoading,Converter={StaticResource InverseBoolean}}"  />
-		<Entry Grid.Row="4" HorizontalOptions="Center" WidthRequest="200" Placeholder="Пароль" Text="{Binding Password}" IsEnabled="{Binding IsLoading,Converter={StaticResource InverseBoolean}}" />
-		<StackLayout Grid.Row="5" Orientation="Horizontal" HorizontalOptions="Center">
-			<Button Text="Выслать Пароль" Command="{Binding SendPasswordCommand}" Style="{StaticResource EditButton}" IsVisible="{Binding IsLoading,Converter={StaticResource InverseBoolean}}" />
-			<Button Text="Войти" Command="{Binding LoginCommand}" Style="{StaticResource ConfirmButton}" IsVisible="{Binding IsLoading,Converter={StaticResource InverseBoolean}}" />
-			<ActivityIndicator IsVisible="{Binding IsLoading}" IsRunning="true" />
-		</StackLayout>
+		<Entry Grid.Row="3" Grid.ColumnSpan="2" HorizontalOptions="Center" WidthRequest="200" Placeholder="Телефон" Text="{Binding PhoneNumber}" IsEnabled="{Binding IsLoading,Converter={StaticResource InverseBoolean}}"  />
+		<Entry Grid.Row="4" Grid.ColumnSpan="2" HorizontalOptions="Center" WidthRequest="200" Placeholder="Пароль" Text="{Binding Password}" IsEnabled="{Binding IsLoading,Converter={StaticResource InverseBoolean}}" />
+	
+		<Button Grid.Row="5" Grid.Column="0" Margin="20,0,0,0" Text="Выслать Пароль" Command="{Binding SendPasswordCommand}" Style="{StaticResource EditButton}" IsVisible="{Binding IsLoading,Converter={StaticResource InverseBoolean}}" />
+		<Button Grid.Row="5" Grid.Column="1" Margin="0,0,20,0" Text="Войти" Command="{Binding LoginCommand}" Style="{StaticResource ConfirmButton}" IsVisible="{Binding IsLoading,Converter={StaticResource InverseBoolean}}" />
+		<ActivityIndicator Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" IsVisible="{Binding IsLoading}" IsRunning="true" HorizontalOptions="Center" />
 
 	</Grid>
 </ContentPage>

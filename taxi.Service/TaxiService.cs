@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using taxi.Model;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace taxi.Service
 {
@@ -42,7 +43,7 @@ namespace taxi.Service
 
 		public async Task<string[]> GetStreetsOrPlacesAsync(string term)
 		{
-			var url = baseUrl + "Orders/GetStreetsOrPlaces?term="+term;
+			var url = baseUrl + "api/navigation/getStreetsOrPlaces)?term="+term;
 			var result = await _restService.GetAsync<string[]>(url);
 			return result;
 		}
@@ -66,6 +67,22 @@ namespace taxi.Service
 				faultResult.message = ex.Message;
 
 				return faultResult;
+			}
+		}
+
+
+		public async Task<WebOrderAddress> GetAddressByCoord(double lat,double lon)
+		{
+			var url = baseUrl + $"api/navigation/getAddressByCoordinates?lat={lat.ToString("G",CultureInfo.InvariantCulture)}&lon={lon.ToString("G",CultureInfo.InvariantCulture)}";
+
+			try
+			{
+				var webAddress = await _restService.GetAsync<WebOrderAddress>(url);
+				return webAddress;
+				
+			}catch (Exception ex)
+			{
+				return null;
 			}
 		}
 	}
