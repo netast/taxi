@@ -29,7 +29,7 @@
 					<ColumnDefinition Width="1*" />
 					<ColumnDefinition Width="1*" />
 				</Grid.ColumnDefinitions>
-				<local:EMap Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand"
+				<local:EMap  x:Name="fromMap"  Grid.Row="0"  Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand"
 				            CameraPositionChangedCommand="{Binding CameraPositionCommand}" 
 				            CenterMapPosition="{Binding CenterMapPosition}"
 				/>

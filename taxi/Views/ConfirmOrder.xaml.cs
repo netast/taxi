@@ -6,14 +6,14 @@ using Xamarin.Forms.GoogleMaps;
 
 namespace taxi
 {
-	public partial class FromLocationPage : ContentPage
+	public partial class ConfirmOrderPage : ContentPage
 	{
-		public FromLocationPage()
+		public ConfirmOrderPage()
 		{
 			InitializeComponent();
 
-			fromMap.MoveToRegion(
-			 MapSpan.FromCenterAndRadius(
+			myMap.MoveToRegion(
+				MapSpan.FromCenterAndRadius(
 				new Position(54.9884804, 73.32423620000009), Distance.FromMiles(1)));
 		}
 	}

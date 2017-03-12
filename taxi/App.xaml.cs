@@ -7,7 +7,7 @@ using taxi.Service;
 using Microsoft.Practices.Unity;
 using Xamarin.Forms.Xaml;
 
-//[assembly: XamlCompilation (XamlCompilationOptions.Compile)]
+[assembly: XamlCompilation (XamlCompilationOptions.Compile)]
 namespace taxi
 {
 	public partial class App : PrismApplication
@@ -34,6 +34,7 @@ namespace taxi
 			Container.RegisterTypeForNavigation<FromLocationPage,FromLocationPageViewModel>();
 			Container.RegisterTypeForNavigation<FromLocationAddressPage, FromLocationAddressPageViewModel>();
 			Container.RegisterTypeForNavigation<OrderPage, OrderPageViewModel>();
+			Container.RegisterTypeForNavigation<ConfirmOrderPage, ConfirmOrderPageViewModel>();
 			#endregion
 
 			#region Services

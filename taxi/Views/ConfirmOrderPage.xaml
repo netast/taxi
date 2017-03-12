@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage 
+    xmlns="http://xamarin.com/schemas/2014/forms" 
+	xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+	xmlns:local="clr-namespace:taxi;assembly=taxi"
+	xmlns:bindings="clr-namespace:Xamarin.Forms.GoogleMaps.Bindings;assembly=Xamarin.Forms.GoogleMaps.Bindings"
+	x:Class="taxi.ConfirmOrderPage"
+	Title="Подвердить Заказ"
+	>
+	<Grid Margin="10">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="*" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="Auto"/>
+			<ColumnDefinition Width="*" />
+		</Grid.ColumnDefinitions>
+
+		<local:EMap x:Name="myMap" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalOptions="FillAndExpand"
+		    CenterMapFromPositions="{Binding CenterMapFromPositions}"
+			>
+			<local:EMap.Behaviors>
+				<bindings:BindingPolylinesBehavior Value="{Binding Polylines}"/>
+				<bindings:BindingPinsBehavior Value="{Binding Pins}" />
+			</local:EMap.Behaviors>
+		</local:EMap>
+		<Label Grid.Row="1" Grid.Column="0" Text="Расстояние: " />
+		<Label Grid.Row="1" Grid.Column="1" Text="{Binding Distance}" />
+		<Label Grid.Row="2" Grid.Column="0" Text="Сумма" />
+		<Label Grid.Row="2" Grid.Column="1" Text="{Binding Amount}" />
+	</Grid>
+</ContentPage>

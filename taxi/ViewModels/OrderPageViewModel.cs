@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Services;
 using taxi.Model;
 using taxi.Service;
 using Xamarin.Forms;
@@ -13,11 +14,14 @@ namespace taxi
 	{
 		INavigationService _navigationService;
 		ITaxiService _taxiService;
+		IPageDialogService _dialogService;
+		 
 
-		public OrderPageViewModel(INavigationService navigationService, ITaxiService taxiService)
+		public OrderPageViewModel(INavigationService navigationService, ITaxiService taxiService, IPageDialogService dislogService)
 		{
 			_taxiService = taxiService;
 			_navigationService = navigationService;
+			_dialogService = dislogService;
 		}
 
 		private OrderRequest _order;
@@ -189,7 +193,32 @@ namespace taxi
 					newWebOrder.SrcAddress = new WebOrderAddress(Order.FromStreet, Order.FromHouse);
 					newWebOrder.DstAddresses = new List<WebOrderAddress> { new WebOrderAddress(Order.ToStreet, Order.ToHouse) };
 
-					var result = await _taxiService.GetOrderInfoAsync(newWebOrder);
+					try
+					{
+						var result = await _taxiService.GetOrderInfoAsync(newWebOrder);
+						if (result == null) { 
+						  await _dialogService.DisplayAlertAsync("Ошибка", "Заказ не принят, проверьте соединение", "ОК");
+							return;
+						
+						}
+
+						if (!string.IsNullOrEmpty(result.Message))
+						{
+							await _dialogService.DisplayAlertAsync("Заказ не принят", result.Message,"OK");
+							return;
+						}
+
+						var navParams = new NavigationParameters();
+						navParams.Add("WebOrder", result.WebOrder);
+
+						await _navigationService.NavigateAsync("ConfirmOrderPage", navParams);
+					}
+					catch (Exception ex) 
+					{
+						await _dialogService.DisplayAlertAsync("Ошибка", "Заказ не принят, проверьте соединение", "ОК");
+						return;
+					}
+
 
 				});
 			}

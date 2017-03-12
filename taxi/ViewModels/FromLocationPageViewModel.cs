@@ -283,7 +283,9 @@ namespace taxi
 				var addr = await _taxiService.GetAddressByCoord(lat, lon);
 				order.FromHouse = addr.House;
 				order.FromStreet = addr.StreetOrPlace;
-				FromPlace = addr != null ? addr.StreetOrPlace + ", " + addr.House : "";
+				FromPlace = addr != null ? addr.StreetOrPlace + (string.IsNullOrEmpty(addr.House) ? "" :  ", " + addr.House ): "";
+				SearchResult = "Я здесь";
+
 #if DEBUG
 			 
 				Debug.WriteLine(FromPlace);
