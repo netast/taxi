@@ -23,9 +23,11 @@ namespace taxi.Service
 			return new TaxiRequestResult{ result = true, message = result.Message};
 		}
 
-		public Task<TaxiRequestResult> AddOrderAsync(string sourceStreetOrPlace, string sourceHouse, string[] interimAddress, string[] interimHomeNumber, string comments, bool isBarter, string pinCode, bool specifiedDateTime, string dateTime, int classID)
+		public async  Task<MessageResult> AddOrderAsync(WebOrder webOrder)
 		{
-			throw new NotImplementedException();
+			var url = baseUrl + "api/webOrders/getOrderInfo";
+			var result = await _restService.PostAsync<WebOrder,MessageResult>(url, webOrder);
+			return result;
 		}
 
 		public Task<TaxiRequestResult> CancelOrderAsync(int orderID, string phoneNumber)

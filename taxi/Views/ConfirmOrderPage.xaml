@@ -31,5 +31,6 @@
 		<Label Grid.Row="1" Grid.Column="1" Text="{Binding Distance}" />
 		<Label Grid.Row="2" Grid.Column="0" Text="Сумма" />
 		<Label Grid.Row="2" Grid.Column="1" Text="{Binding Amount}" />
+		<Button  Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="Подтвердить" Command="{Binding PlaceOrderCommand}" Style="{StaticResource ConfirmButton}" HorizontalOptions="FillAndExpand"/>
 	</Grid>
 </ContentPage>

@@ -54,6 +54,8 @@
     <EmbeddedResource Include="Views\ConfirmOrderPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Include="Images\finish_s.png" />
+    <EmbeddedResource Include="Images\start_s.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">

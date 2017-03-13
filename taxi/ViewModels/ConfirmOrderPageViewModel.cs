@@ -55,7 +55,7 @@ namespace taxi
 			get 
 			{
 				var distance = webOrder?.DistanceKM;
-				return distance != null ? (int)distance + " Км" : "";
+				return distance != null ? distance + " Км" : "";
 			}
 		}
 
@@ -67,6 +67,38 @@ namespace taxi
 				return amount != null ? (int)amount + " руб." : "";
 			}
 		}
+
+
+		public Command PlaceOrderCommand
+		{
+			get 
+			{
+				return new Command(async () => 
+				{
+
+					try
+					{
+						var result = await _taxiService.AddOrderAsync(webOrder);
+
+						if (string.IsNullOrEmpty(result.Message))
+						{
+							await _dialogService.DisplayAlertAsync("Спасибо", "Заказ принят", "OK");
+
+							await _navigationService.NavigateAsync("/FromLocationPage");
+						}
+						else
+						{
+							await _dialogService.DisplayAlertAsync("Заказ не принят", result.Message, "OK");
+						}
+					}
+					catch (Exception ex)
+					{
+						await _dialogService.DisplayAlertAsync("Заказ не принят", "Проверьте интернет соендинение", "OK");
+					}
+				});
+			}
+		}
+
 
 		public void OnNavigatedFrom(NavigationParameters parameters)
 		{
@@ -96,7 +128,7 @@ namespace taxi
 			var polyline = new Polyline();
 			polyline.StrokeColor = Color.Blue;
 			polyline.StrokeWidth = 5f;
-			polyline.Tag = "POLYLINE"; // Can set any object
+			//polyline.Tag = "POLYLINE"; // Can set any object
 		
 			foreach (var point in routePoints)
 			{
@@ -106,8 +138,10 @@ namespace taxi
 			var positions = routePoints.Select(rp => new Position(rp.Lat,rp.Lon)).ToList();
 			CenterMapFromPositions = positions;
 
+			Polylines.Clear();
 			Polylines.Add(polyline);
 
+		
 
 			var startPoint = routePoints.FirstOrDefault();
 			var endPin = routePoints.LastOrDefault();
@@ -118,13 +152,13 @@ namespace taxi
 				IsDraggable = false,
 				IsVisible = true,
 				Label = "Старт",
-				Address= webOrder.SrcAddress.StreetOrPlace + webOrder.SrcAddress.House != null ? ", " +  webOrder.SrcAddress.House : "",
-				Type = PinType.Generic
+				Address= webOrder.SrcAddress.StreetOrPlace + ", " + webOrder.SrcAddress.House,
+				Type = PinType.Place
 			};
 
 			var assembly = typeof(ConfirmOrderPage).GetTypeInfo().Assembly;
-			var stream = assembly.GetManifestResourceStream($"taxi.Images.man.png");
-			//startPin.Icon = BitmapDescriptorFactory.FromStream(stream);
+			var stream = assembly.GetManifestResourceStream($"taxi.Images.start_s.png");
+			startPin.Icon = BitmapDescriptorFactory.FromStream(stream);
 
 			var finishPin = new Pin
 			{
@@ -133,10 +167,12 @@ namespace taxi
 				IsDraggable = false,
 				IsVisible = true,
 				Label = "Финиш",
-				Type = PinType.Generic,
-				Address = webOrder.DstAddresses[0].StreetOrPlace + webOrder.DstAddresses[0].House != null ? ", " + webOrder.DstAddresses[0].House : ""
+				Type = PinType.Place,
+				Address = webOrder.DstAddresses[0].StreetOrPlace + ", "  + webOrder.DstAddresses[0].House
 			};
 
+			stream = assembly.GetManifestResourceStream($"taxi.Images.finish_s.png");
+			finishPin.Icon = BitmapDescriptorFactory.FromStream(stream);
 
 			Pins.Add(startPin);
 			Pins.Add(finishPin);
